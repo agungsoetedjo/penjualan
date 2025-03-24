@@ -33,17 +33,12 @@
         @foreach($produk as $p)
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm" style="border: 1px solid #f0f0f0; border-radius: 8px; overflow: hidden;">
-                <!-- Gambar Produk -->
                 <div class="img-container" style="width: 100%; height: 200px; overflow: hidden;">
-                    <img src="{{ asset('storage/' . $p->gambar) }}" alt="{{ $p->nama }}"
-                        style="width: 100%; height: 100%; object-fit: contain;">
+                    <img src="{{ asset('storage/' . $p->gambar) }}" alt="{{ $p->nama }}" style="width: 100%; height: 100%; object-fit: contain;">
                 </div>
                 <div class="card-body p-3">
-                    <!-- Judul Produk -->
                     <span class="card-title" style="font-size: 1rem; font-weight: normal; display: block; margin-bottom: 5px;">{{ $p->nama }}</span>
-                    <!-- Harga Produk -->
                     <h6 class="card-text text-success font-weight-bold" style="margin-bottom: 15px;">Rp{{ number_format($p->harga, 0, ',', '.') }}</h6>
-                    <!-- Form untuk menambahkan ke keranjang -->
                     <form action="{{ route('keranjang.tambah', ['id' => $p->id]) }}" method="POST">
                         @csrf
                         <input type="hidden" name="produk_id" value="{{ $p->id }}">
