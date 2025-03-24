@@ -27,6 +27,16 @@ input.form-control {
     </script>
     @endif
 
+    @if (session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+        });
+    </script>
+    @endif
+
     @if($keranjang->isEmpty())
         <div class="row">
             <div class="col-md-8">

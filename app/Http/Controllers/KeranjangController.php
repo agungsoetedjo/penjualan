@@ -14,7 +14,6 @@ class KeranjangController extends Controller
 
     public function index() {
         $keranjang = Keranjang::with('produk')->get();
-    
         // Hitung total belanja langsung dari produk
         $totalHarga = $keranjang->sum(fn($item) => $item->jumlah * $item->produk->harga);
     
@@ -69,6 +68,11 @@ class KeranjangController extends Controller
     public function tambah(Request $request, $id)
     {
         $jumlah = $request->input('jumlah', 1); // Ambil jumlah dari input, default 1
+        $produk = Produk::findOrFail($id);
+
+        if ($produk->stok < $jumlah) {
+            return redirect()->route('keranjang.index')->with('error', 'Stok produk tidak mencukupi.');
+        }
         // Cek apakah produk sudah ada di keranjang
         $keranjang = Keranjang::where('produk_id', $id)->first();
 
@@ -83,38 +87,36 @@ class KeranjangController extends Controller
             ]);
         }
 
-        return redirect()->route('keranjang.index')->with('success', 'Produk berhasil ditambahkan ke keranjang');
+        return redirect()->route('keranjang.index');
     }
 
     public function kurangi($id)
-{
-    // Ambil data keranjang berdasarkan produk_id
-    $keranjang = Keranjang::where('produk_id', $id)->first();
+    {
+        // Ambil data keranjang berdasarkan produk_id
+        $keranjang = Keranjang::where('produk_id', $id)->first();
 
-    if ($keranjang) {
-        if ($keranjang->jumlah > 1) {
-            // Kurangi jumlah produk
-            $keranjang->decrement('jumlah');
-        } else {
-            // Jika jumlah produk sudah 1, hapus produk dari keranjang
-            $keranjang->delete();
-            return redirect()->route('keranjang.index')->with('success', 'Produk berhasil dikurangi dari keranjang');
+        if ($keranjang) {
+            if ($keranjang->jumlah > 1) {
+                // Kurangi jumlah produk
+                $keranjang->decrement('jumlah');
+            } else {
+                // Jika jumlah produk sudah 1, hapus produk dari keranjang
+                $keranjang->delete();
+                return redirect()->route('keranjang.index');
+            }
         }
+
+        // Ambil ulang semua item di keranjang
+        $keranjang = Keranjang::with('produk')->get();
+
+        // Hitung total harga setelah perubahan
+        $totalHarga = $keranjang->sum(function ($item) {
+            return $item->jumlah * $item->produk->harga;
+        });
+
+        // Kembalikan total harga dan data keranjang ke view
+        return redirect()->route('keranjang.index')->with(['keranjang' => $keranjang, 'totalHarga' => $totalHarga]);
     }
-
-    // Ambil ulang semua item di keranjang
-    $keranjang = Keranjang::with('produk')->get();
-
-    // Hitung total harga setelah perubahan
-    $totalHarga = $keranjang->sum(function ($item) {
-        return $item->jumlah * $item->produk->harga;
-    });
-
-    // Kembalikan total harga dan data keranjang ke view
-    return redirect()->route('keranjang.index')->with(['keranjang' => $keranjang, 'totalHarga' => $totalHarga]);
-}
-
-
 
     public function hapus($id)
     {
