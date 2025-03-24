@@ -17,10 +17,10 @@
     @endif
 
     @if($keranjang->isEmpty())
-        <div class="row">
+        <div class="row"> <!-- Tambahkan mb-4 untuk memberi jarak lebih -->
             <!-- Panel Keranjang Kosong -->
             <div class="col-md-8">
-                <div class="card p-3 shadow" style="border-radius: 8px;">
+                <div class="card p-3 shadow mb-3" style="border-radius: 8px;">
                     <div class="text-center">
                         <!-- Gambar Keranjang Kosong -->
                         <img src="{{ asset('assets/img/4d27af6a.svg') }}" alt="Keranjang Kosong" class="mb-3" style="max-width: 100px; height: auto;">
