@@ -36,8 +36,11 @@
             <!-- Panel Total Belanja -->
             <div class="col-md-4">
                 <div class="card p-3 mb-3 shadow" style="border-radius: 8px;">
-                    <h5>Total Belanja</h5>
-                    <h4 class="fw-bold">Rp{{ number_format(0, 0, ',', '.') }}</h4>
+                    <h5>Ringkasan Belanja</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Total</span>
+                        <h5 class="fw-bold mb-0 text-end">-</h5>
+                    </div>
                     <form action="{{ route('transaksi.checkout') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-success w-100 mt-3" disabled>Checkout</button>
@@ -52,28 +55,34 @@
                     @foreach($keranjang as $item)
                     <div class="d-flex align-items-center border-bottom pb-3 mb-3">
                         <img src="{{ asset('storage/' . $item->produk->gambar) }}" class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;">
+                        
                         <div class="ms-3 flex-grow-1">
-                            <h5 class="mb-1">{{ $item->produk->nama }}</h5>
-                            <p class="text-muted mb-0">Rp{{ number_format($item->produk->harga, 0, ',', '.') }}</p>
+                            <!-- Judul Produk -->
+                            <h5 class="mb-1" style="font-weight: normal;">{{ $item->produk->nama }}</h5>
                         </div>
-                        <div class="d-flex align-items-center">
+                    
+                        <div class="ms-3 flex-grow-1">
+                            <!-- Harga Produk di sebelah kanan -->
+                            <p class="text-muted mb-0 text-end">Rp{{ number_format($item->produk->harga, 0, ',', '.') }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex flex-column mt-2">
+                        <div class="d-flex justify-content-end align-items-center w-100">
+                            <form action="{{ route('keranjang.hapus', $item->id) }}" method="POST" class="me-2">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
                             <form action="{{ route('keranjang.kurangi', $item->produk->id) }}" method="POST">
                                 @csrf
                                 <button class="btn btn-light btn-sm">-</button>
                             </form>
-
                             <input type="text" class="form-control mx-2 text-center" style="width: 50px;" value="{{ $item->jumlah }}" readonly>
-
                             <form action="{{ route('keranjang.tambah', $item->produk->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-light btn-sm">+</button>
                             </form>
                         </div>
-
-                        <form action="{{ route('keranjang.hapus', $item->id) }}" method="POST" class="ms-3">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                        </form>
                     </div>
                     @endforeach
                 </div>
@@ -81,11 +90,15 @@
 
             <div class="col-md-4">
                 <div class="card p-3 mb-3 shadow" style="border-radius: 8px;">
-                    <h5>Total Belanja</h5>
-                    <h4 class="fw-bold">Rp{{ number_format($totalHarga, 0, ',', '.') }}</h4>
+                    <h5>Ringkasan Belanja</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Total Belanja</span>
+                        <h5 class="fw-bold mb-0 text-end">Rp{{ number_format($totalHarga, 0, ',', '.') }}</h5>
+                    </div>
                     <form action="{{ route('transaksi.checkout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-success w-100 mt-3">Checkout</button>
+                        <button type="submit" class="btn btn-success w-100 mt-3" 
+                            @if($keranjang->isEmpty()) disabled @endif>Checkout</button>
                     </form>
                 </div>
             </div>
