@@ -45,7 +45,7 @@ input.form-control {
                         <img src="{{ asset('assets/img/4d27af6a.svg') }}" alt="Keranjang Kosong" class="mb-3" style="max-width: 100px; height: auto;">
                         <h5 style="font-size: 1.2rem;">Keranjang Anda kosong</h5>
                         <p class="text-muted" style="font-size: 1rem;">Segera tambahkan produk ke keranjang Anda.</p>
-                        <a href="/transaksi" class="btn btn-success" style="font-size: 1rem; padding: 8px 16px;">Mulai Belanja</a>
+                        <a href="/transaksi" class="btn btn-success" style="font-size: 1rem; padding: 8px 16px; font-weight: bold;">Mulai Belanja</a>
                     </div>
                 </div>
             </div>
