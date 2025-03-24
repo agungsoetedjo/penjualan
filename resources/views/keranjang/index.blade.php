@@ -97,7 +97,7 @@ input.form-control {
                             <!-- Tombol Kurangi Jumlah -->
                             <form action="{{ route('keranjang.kurangi', $item->produk->id) }}" method="POST">
                                 @csrf
-                                <button class="btn btn-light btn-sm">-</button>
+                                <button class="btn btn-light btn-sm" {{ $item->jumlah == 1 ? 'disabled' : '' }}>-</button>
                             </form>
                     
                             <!-- Input Jumlah Produk -->

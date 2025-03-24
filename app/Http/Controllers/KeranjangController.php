@@ -102,15 +102,9 @@ class KeranjangController extends Controller
         // Ambil data keranjang berdasarkan produk_id
         $keranjang = Keranjang::where('produk_id', $id)->first();
 
-        if ($keranjang) {
-            if ($keranjang->jumlah > 1) {
-                // Kurangi jumlah produk
-                $keranjang->decrement('jumlah');
-            } else {
-                // Jika jumlah produk sudah 1, hapus produk dari keranjang
-                $keranjang->delete();
-                return redirect()->route('keranjang.index');
-            }
+        if ($keranjang && $keranjang->jumlah > 1) {
+            // Kurangi jumlah produk hanya jika lebih dari 1
+            $keranjang->decrement('jumlah');
         }
 
         // Ambil ulang semua item di keranjang
@@ -122,8 +116,12 @@ class KeranjangController extends Controller
         });
 
         // Kembalikan total harga dan data keranjang ke view
-        return redirect()->route('keranjang.index')->with(['keranjang' => $keranjang, 'totalHarga' => $totalHarga]);
+        return redirect()->route('keranjang.index')->with([
+            'keranjang' => $keranjang, 
+            'totalHarga' => $totalHarga
+        ]);
     }
+
 
     public function hapus($id)
     {
