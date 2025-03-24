@@ -86,7 +86,14 @@ class KeranjangController extends Controller
                 'jumlah' => $jumlah,
             ]);
         }
+        $source = $request->input('source', '');  // Defaultnya kosong jika tidak ada 'source'
 
+        // Jika datang dari halaman transaksi
+        if ($source == 'transaksi') {
+            return redirect()->route('keranjang.index')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+        }
+
+        // Jika datang dari halaman keranjang
         return redirect()->route('keranjang.index');
     }
 
