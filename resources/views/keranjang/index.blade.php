@@ -49,12 +49,16 @@
                 <div class="card p-3 mb-3">
                     @foreach($keranjang as $item)
                     <div class="d-flex align-items-center pb-3 mb-3">
+                        <!-- Gambar Produk -->
                         <img src="{{ asset('storage/' . $item->produk->gambar) }}" class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;">
-                        <div class="ms-3 flex-grow-1">
+                    
+                        <!-- Judul dan Harga Produk dalam Satu Div -->
+                        <div class="ms-3 flex-grow-1 d-flex justify-content-between align-items-center w-100">
+                            <!-- Judul Produk -->
                             <h5 class="mb-1" style="font-weight: normal;">{{ $item->produk->nama }}</h5>
-                        </div>
-                        <div class="ms-3 flex-grow-1">
-                            <p class="mb-0 text-end" style="font-weight: bold;">Rp{{ number_format($item->produk->harga, 0, ',', '.') }}</p>
+                    
+                            <!-- Harga Produk -->
+                            <p class="mb-0" style="font-weight: bold;">Rp{{ number_format($item->produk->harga, 0, ',', '.') }}</p>
                         </div>
                     </div>
                     
