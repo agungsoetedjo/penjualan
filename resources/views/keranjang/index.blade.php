@@ -3,6 +3,17 @@
 @section('title', 'Keranjang Belanja')
 
 @section('content')
+<style>
+button.btn-sm {
+    min-width: 30px;
+    padding: 0.2rem 0.5rem;
+}
+
+input.form-control {
+    width: 50px;
+    height: 30px;
+}
+</style>
 <div class="container mt-4">
     <h3 class="mb-4">Keranjang</h3>
 
@@ -48,39 +59,48 @@
             <div class="col-md-8">
                 <div class="card p-3 mb-3">
                     @foreach($keranjang as $item)
-                    <div class="d-flex align-items-center pb-3 mb-3">
+                    <div class="d-flex align-items-center border-bottom pb-3 mb-3">
                         <!-- Gambar Produk -->
                         <img src="{{ asset('storage/' . $item->produk->gambar) }}" class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;">
                     
-                        <!-- Judul dan Harga Produk dalam Satu Div -->
-                        <div class="ms-3 flex-grow-1 d-flex justify-content-between align-items-center w-100">
+                        <!-- Div untuk Judul Produk -->
+                        <div class="ms-3 flex-grow-1">
                             <!-- Judul Produk -->
                             <h5 class="mb-1" style="font-weight: normal;">{{ $item->produk->nama }}</h5>
+                        </div>
                     
-                            <!-- Harga Produk -->
-                            <p class="mb-0" style="font-weight: bold;">Rp{{ number_format($item->produk->harga, 0, ',', '.') }}</p>
+                        <!-- Div untuk Harga Produk, diposisikan ke kanan -->
+                        <div class="ms-auto text-end" style="font-weight: bold;">
+                            <p class="mb-0">Rp{{ number_format($item->produk->harga, 0, ',', '.') }}</p>
                         </div>
                     </div>
                     
-                    <div class="d-flex flex-column mt-2">
-                        <div class="d-flex justify-content-end align-items-center w-100">
-                            <div class="d-flex align-items-center border rounded p-2">
-                                <form action="{{ route('keranjang.hapus', $item->id) }}" method="POST" class="me-2">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
-                                </form>
-                                <form action="{{ route('keranjang.kurangi', $item->produk->id) }}" method="POST">
-                                    @csrf
-                                    <button class="btn btn-light btn-sm">-</button>
-                                </form>
-                                <input type="text" class="form-control mx-2 text-center" style="width: 50px;" value="{{ $item->jumlah }}" readonly>
-                                <form action="{{ route('keranjang.tambah', $item->produk->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-light btn-sm">+</button>
-                                </form>
-                            </div>
+                    <!-- Tombol Hapus, Kurangi, dan Tambah, diposisikan ke kanan tengah -->
+                    <div class="d-flex justify-content-end align-items-center mt-2 w-100">
+                        <div class="d-flex align-items-center">
+                            <!-- Tombol Hapus -->
+                            <form action="{{ route('keranjang.hapus', $item->id) }}" method="POST" class="me-2">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                            </form>
+                    
+                            <!-- Tombol Kurangi Jumlah -->
+                            <form action="{{ route('keranjang.kurangi', $item->produk->id) }}" method="POST">
+                                @csrf
+                                <button class="btn btn-light btn-sm">-</button>
+                            </form>
+                    
+                            <!-- Input Jumlah Produk -->
+                            <input type="text" class="form-control mx-2 text-center" style="width: 50px;" value="{{ $item->jumlah }}" readonly>
+                    
+                            <!-- Tombol Tambah Jumlah -->
+                            <form action="{{ route('keranjang.tambah', $item->produk->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-light btn-sm">+</button>
+                            </form>
                         </div>
                     </div>
+                    
                     @endforeach
                 </div>
             </div>
