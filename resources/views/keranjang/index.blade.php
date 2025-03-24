@@ -36,7 +36,7 @@
             <!-- Panel Total Belanja -->
             <div class="col-md-4">
                 <div class="card p-3 mb-3 shadow" style="border-radius: 8px;">
-                    <h5>Ringkasan Belanja</h5>
+                    <h5>Ringkasan belanja</h5>
                     <div class="d-flex justify-content-between align-items-center">
                         <span>Total</span>
                         <h5 class="fw-bold mb-0 text-end">-</h5>
@@ -71,7 +71,7 @@
                         <div class="d-flex justify-content-end align-items-center w-100">
                             <form action="{{ route('keranjang.hapus', $item->id) }}" method="POST" class="me-2">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
                             </form>
                             <form action="{{ route('keranjang.kurangi', $item->produk->id) }}" method="POST">
                                 @csrf
@@ -90,9 +90,9 @@
 
             <div class="col-md-4">
                 <div class="card p-3 mb-3 shadow" style="border-radius: 8px;">
-                    <h5>Ringkasan Belanja</h5>
+                    <h5>Ringkasan belanja</h5>
                     <div class="d-flex justify-content-between align-items-center">
-                        <span>Total Belanja</span>
+                        <span>Total</span>
                         <h5 class="fw-bold mb-0 text-end">Rp{{ number_format($totalHarga, 0, ',', '.') }}</h5>
                     </div>
                     <form action="{{ route('transaksi.checkout') }}" method="POST">

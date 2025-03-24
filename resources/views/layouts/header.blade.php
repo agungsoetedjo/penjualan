@@ -7,6 +7,7 @@
     <title>@yield('title', 'Beranda')</title>
     <link rel="icon" href="https://laravel.com/img/logomark.min.svg" type="image/svg+xml">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.7/dist/sweetalert2.all.min.js"></script>
 </head>
 <style>

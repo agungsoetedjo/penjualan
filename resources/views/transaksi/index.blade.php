@@ -28,7 +28,7 @@
 
     <hr>
 
-    <h3>Produk yang Tersedia</h3>
+    <h5>Produk yang Tersedia</h5>
     <div class="row">
         @foreach($produk as $p)
         <div class="col-md-3 mb-4">
@@ -49,7 +49,7 @@
                         <input type="hidden" name="produk_id" value="{{ $p->id }}">
                         <div class="d-flex justify-content-between align-items-center">
                             <input type="number" name="jumlah" class="form-control form-control-sm" value="1" min="1" max="{{ $p->stok }}" required style="width: 60px;">
-                            <button type="submit" class="btn btn-success btn-sm">Tambah</button>
+                            <button type="submit" class="btn btn-success btn-sm" title="Tambah ke Keranjang"><i class="bi bi-cart"></i></button>
                         </div>
                     </form>
                 </div>
