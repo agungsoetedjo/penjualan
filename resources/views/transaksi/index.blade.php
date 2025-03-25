@@ -39,15 +39,23 @@
                 <div class="card-body p-3">
                     <span class="card-title" style="font-size: 1rem; font-weight: normal; display: block; margin-bottom: 5px;">{{ $p->nama }}</span>
                     <h6 class="card-text text-success font-weight-bold" style="margin-bottom: 15px;">Rp{{ number_format($p->harga, 0, ',', '.') }}</h6>
+                    @if ($p->stok > 0)
                     <form action="{{ route('keranjang.tambah', ['id' => $p->id]) }}" method="POST">
                         @csrf
-                        <input type="hidden" name="source" value="transaksi"> <!-- Menambahkan source transaksi -->
+                        <input type="hidden" name="source" value="transaksi">
                         <input type="hidden" name="produk_id" value="{{ $p->id }}">
                         <div class="d-flex justify-content-between align-items-center">
                             <input type="number" name="jumlah" class="form-control form-control-sm" value="1" min="1" max="{{ $p->stok }}" required style="width: 60px;">
-                            <button type="submit" class="btn btn-success btn-sm" title="Tambah ke Keranjang"><i class="bi bi-cart"></i></button>
+                            <button title="Tambah ke Keranjang" type="submit" class="btn btn-success btn-sm px-3" style="background-color: #16a085; border-color: #16a085; color: white; font-weight: bold;">
+                                <i class="bi bi-cart-plus"></i> Tambah
+                            </button>
                         </div>
                     </form>
+                    @else
+                    <button class="btn btn-danger btn-sm w-100" disabled style="background-color: #dc3545; border-color: #dc3545; color: white;">
+                        <i class="bi bi-exclamation-circle"></i> Stok Habis
+                    </button>
+                    @endif
                 </div>
             </div>
         </div>
