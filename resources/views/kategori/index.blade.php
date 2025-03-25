@@ -21,7 +21,7 @@
     </button>
 
     <!-- Daftar Kategori -->
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped datatable">
         <thead>
             <tr>
                 <th>#</th>
@@ -35,11 +35,11 @@
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $k->nama }}</td>
                 <td>
-                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditKategori{{ $k->id }}">Edit</button>
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditKategori{{ $k->id }}"><i class="bi bi-pencil"></i></button>
 
                     <form action="/kategori/{{ $k->id }}" method="POST" class="d-inline delete-form">
                         @csrf @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-sm delete-btn">Hapus</button>
+                        <button type="button" class="btn btn-danger btn-sm delete-btn"><i class="bi bi-trash"></i></button>
                     </form>
                 </td>
             </tr>
@@ -98,7 +98,8 @@
         </div>
     </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('assets/js/ourscript.js') }}"></script>
 <script>
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function(e) {

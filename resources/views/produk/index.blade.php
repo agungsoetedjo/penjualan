@@ -20,7 +20,7 @@
         Tambah Produk
     </button>
 
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped datatable">
         <thead>
             <tr>
                 <th>#</th>
@@ -138,6 +138,8 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('assets/js/ourscript.js') }}"></script>
 
 <script>
     document.querySelectorAll('.delete-btn').forEach(button => {
