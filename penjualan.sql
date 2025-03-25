@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 24 Mar 2025 pada 13.18
+-- Waktu pembuatan: 25 Mar 2025 pada 03.52
 -- Versi server: 8.0.30
 -- Versi PHP: 8.3.11
 
@@ -136,7 +136,8 @@ CREATE TABLE `keranjang` (
 --
 
 INSERT INTO `keranjang` (`id`, `produk_id`, `jumlah`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, '2025-03-24 06:12:10', '2025-03-24 06:12:10');
+(23, 1, 3, '2025-03-25 03:45:56', '2025-03-25 03:46:33'),
+(24, 2, 1, '2025-03-25 03:46:06', '2025-03-25 03:46:31');
 
 -- --------------------------------------------------------
 
@@ -199,7 +200,7 @@ CREATE TABLE `produk` (
 
 INSERT INTO `produk` (`id`, `nama`, `harga`, `stok`, `kategori_id`, `gambar`, `created_at`, `updated_at`) VALUES
 (1, 'Energen Vanilla', 2000.00, 20, 2, 'produk/pNxJUPqB2S9vtlKfhsi8q5bgWFozicjIhwbea2HS.png', '2025-03-24 01:49:51', '2025-03-24 01:51:42'),
-(2, 'ABC Susu', 2000.00, 20, 1, 'produk/UH2cGwwp62AxlReoXbYGqkeBuDuMIK90HRmkEjoS.jpg', '2025-03-24 01:52:44', '2025-03-24 01:52:44');
+(2, 'ABC Susu', 2000.00, 10, 1, 'produk/UH2cGwwp62AxlReoXbYGqkeBuDuMIK90HRmkEjoS.jpg', '2025-03-24 01:52:44', '2025-03-24 09:22:34');
 
 -- --------------------------------------------------------
 
@@ -221,7 +222,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('In41WxFiL8jtwFIs8g6NGKzA3KTlLc0zJhoy9uWx', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiOVhDMGtpaEF4SFJIQlp4WU1JaUdUUUtldW14M2R5RWlNQmxaU3BCdCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9wZW5qdWFsYW4udGVzdC9rZXJhbmphbmciO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjQ6ImNhcnQiO2E6MTp7aToxO2E6Mzp7czo0OiJuYW1hIjtzOjE1OiJFbmVyZ2VuIFZhbmlsbGEiO3M6NToiaGFyZ2EiO3M6NzoiMjAwMC4wMCI7czo2OiJqdW1sYWgiO2k6Mjt9fX0=', 1742821930);
+('6uDOZHmSir4pMxkdjlsNxaKMpylkctGiMpSVqGUP', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZmxraWlsVFBmdnJub0Q5RFFENE9tYVJMTWVsamZVRzh0R05WemsxUiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9wZW5qdWFsYW4udGVzdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1742872444),
+('J6WXPRDPwfHLqNUSiHWytKMnfb2SNWslSr6waZ8T', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUUZvM2lCQkdJZTlkY2NNY002QlgwV3hSNXZlUVJlVVB5c1RlSFZlTyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9wZW5qdWFsYW4udGVzdC9rZXJhbmphbmciO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1742874394);
 
 -- --------------------------------------------------------
 
@@ -395,7 +397,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
