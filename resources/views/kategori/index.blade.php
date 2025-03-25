@@ -121,5 +121,17 @@
             });
         });
     });
+
+    $(document).ready(function () {
+        $('#modalTambahKategori').on('hidden.bs.modal', function () {
+            $(this).find('form')[0].reset(); // Reset form di dalam modal
+        });
+    });
+
+    $(document).ready(function () {
+        $('#modalEditKategori').on('hidden.bs.modal', function () {
+            $(this).find('form')[0].reset(); // Reset form di dalam modal
+        });
+    });
 </script>
 @endsection

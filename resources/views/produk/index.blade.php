@@ -149,6 +149,18 @@
             });
         });
     });
+
+    $(document).ready(function () {
+        $('#modalTambahProduk').on('hidden.bs.modal', function () {
+            $(this).find('form')[0].reset(); // Reset form di dalam modal
+        });
+    });
+
+    $(document).ready(function () {
+        $('#modalEditProduk').on('hidden.bs.modal', function () {
+            $(this).find('form')[0].reset(); // Reset form di dalam modal
+        });
+    });
 </script>
 
 @endsection
