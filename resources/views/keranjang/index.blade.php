@@ -37,7 +37,7 @@ input.form-control {
     </script>
     @endif
 
-    @if($keranjang->isEmpty())
+    @if($keranjangItems->isEmpty())
         <div class="row">
             <div class="col-md-8">
                 <div class="card p-3 shadow mb-3" style="border-radius: 8px;">
@@ -67,69 +67,78 @@ input.form-control {
     @else
         <div class="row">
             <div class="col-md-8">
-                <div class="card p-3 mb-3">
-                    @foreach($keranjang as $item)
-                    <div class="d-flex align-items-center border-bottom pb-3 mb-3">
-                        <!-- Gambar Produk -->
-                        <img src="{{ asset('storage/' . $item->produk->gambar) }}" class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;">
-                    
-                        <!-- Div untuk Judul Produk -->
-                        <div class="ms-3 flex-grow-1">
-                            <!-- Judul Produk -->
-                            <h5 class="mb-1" style="font-weight: normal;">{{ $item->produk->nama }}</h5>
-                        </div>
-                    
-                        <!-- Div untuk Harga Produk, diposisikan ke kanan -->
-                        <div class="ms-auto text-end" style="font-weight: bold;">
-                            <p class="mb-0">Rp{{ number_format($item->produk->harga, 0, ',', '.') }}</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Tombol Hapus, Kurangi, dan Tambah, diposisikan ke kanan tengah -->
-                    <div class="d-flex justify-content-end align-items-center mt-2 w-100">
-                        <div class="d-flex align-items-center">
-                            <!-- Tombol Hapus -->
-                            <form action="{{ route('keranjang.hapus', $item->id) }}" method="POST" class="me-2">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
-                            </form>
-                    
-                            <!-- Tombol Kurangi Jumlah -->
-                            <form action="{{ route('keranjang.kurangi', $item->produk->id) }}" method="POST">
-                                @csrf
-                                <button class="btn btn-light btn-sm" {{ $item->jumlah == 1 ? 'disabled' : '' }}>-</button>
-                            </form>
-                    
-                            <!-- Input Jumlah Produk -->
-                            <input type="text" class="form-control mx-2 text-center" style="width: 50px;" value="{{ $item->jumlah }}" readonly>
-                    
-                            <!-- Tombol Tambah Jumlah -->
-                            <form action="{{ route('keranjang.tambah', $item->produk->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-light btn-sm">+</button>
-                            </form>
-                        </div>
-                    </div>
-                    
-                    @endforeach
+                <div class="card p-3 mb-3" id="keranjangItems">
+                    @include('keranjang.partial_keranjang', ['keranjang' => $keranjangItems])
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="card p-3 mb-3 shadow" style="border-radius: 8px;">
                     <h5>Ringkasan belanja</h5>
                     <div class="d-flex justify-content-between align-items-center">
                         <span>Total</span>
-                        <h5 class="fw-bold mb-0 text-end">Rp{{ number_format($totalHarga, 0, ',', '.') }}</h5>
+                        <h5 class="fw-bold mb-0 text-end" id="totalHarga">Rp{{ number_format($totalHarga, 0, ',', '.') }}</h5>
                     </div>
                     <form action="{{ route('transaksi.checkout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-success w-100 mt-3" 
-                            @if($keranjang->isEmpty()) disabled @endif>Checkout</button>
+                        <button type="submit" class="btn btn-success w-100 mt-3" @if($keranjangItems->isEmpty()) disabled @endif>Checkout</button>
                     </form>
+
                 </div>
             </div>
         </div>
     @endif
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).on('click', '.kurangi', function() {
+    var productId = $(this).data('id');
+
+    $.ajax({
+        url: '/keranjang/kurangi/' + productId,
+        type: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+        },
+        success: function(response) {
+            // Update keranjang and total price dynamically
+            $('#keranjangItems').html(response.keranjang);  // Update list keranjang
+            $('#totalHarga').text('Rp' + response.totalHarga);  // Update total price
+        },
+        error: function(response) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: response.responseJSON.error,
+            });
+        }
+    });
+});
+
+$(document).on('click', '.tambah', function() {
+    var productId = $(this).data('id');
+
+    $.ajax({
+        url: '/keranjang/tambah/' + productId,
+        type: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+        },
+        success: function(response) {
+            // Update keranjang and total price dynamically
+            $('#keranjangItems').html(response.keranjang);  // Update list keranjang
+            $('#totalHarga').text('Rp' + response.totalHarga);  // Update total price
+        },
+        error: function(response) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: response.responseJSON.error,
+            });
+        }
+    });
+});
+
+
+</script>
 @endsection
