@@ -78,7 +78,28 @@ class KeranjangController extends Controller
     {
         $jumlah = $request->input('jumlah', 1);
         $produk = Produk::findOrFail($id);
+
+        // Cek jika jumlah yang diminta melebihi stok produk
+        
         $keranjang = Keranjang::where('produk_id', $id)->first();
+
+        // Hitung total jumlah produk di keranjang, jika sudah ada
+        $jumlahDiKeranjang = $keranjang ? $keranjang->jumlah : 0;
+
+        // Cek jika jumlah di keranjang sudah mencapai batas stok
+        if ($jumlahDiKeranjang >= $produk->stok) {
+            // Tampilkan pesan error jika jumlah di keranjang sudah mencapai stok
+            return redirect()->back()->with('error', 'Jumlah produk di keranjang sudah mencapai batas stok yang tersedia.');
+        }
+
+        // Hitung sisa stok yang bisa ditambahkan
+        $sisaStok = $produk->stok - $jumlahDiKeranjang;
+
+        // Cek jika penambahan jumlah akan melebihi stok
+        if (($jumlahDiKeranjang + $jumlah) > $produk->stok) {
+            // Tampilkan pesan error dengan jumlah maksimal yang bisa ditambahkan
+            return redirect()->back()->with('error', 'Anda hanya bisa menambahkan ' . $sisaStok . ' buah produk ini.');
+        }
 
         if ($keranjang) {
             $keranjang->increment('jumlah',$jumlah);
