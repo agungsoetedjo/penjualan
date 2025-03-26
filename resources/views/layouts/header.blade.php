@@ -33,5 +33,9 @@ footer {
     padding: 10px 0;
 }
 
+.pagination .justify-content-between {
+    display: none;
+}
+
 </style>
 <body>

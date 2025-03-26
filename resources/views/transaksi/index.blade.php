@@ -4,29 +4,22 @@
 
 @section('content')
 <div class="container mt-4">
-    <h3>Riwayat Transaksi</h3>
-
-    @if($transaksi->isEmpty())
-        <div class="alert alert-warning">Belum ada transaksi.</div>
-    @else
-        <div class="row">
-            @foreach ($produk as $p)
-            <div class="card" style="width: 18rem;">
-                <img src="{{ asset('storage/' . $p->gambar) }}" class="card-img-top" alt="{{ $p->nama }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $p->nama }}</h5>
-                    <p class="card-text">Rp{{ number_format($p->harga, 0, ',', '.') }}</p>
-                    <form action="{{ route('keranjang.tambah', ['id' => $p->id]) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">Tambah ke Keranjang</button>
-                    </form>
-                </div>
-            </div>
-            @endforeach
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <label class="me-2">Tampilkan</label>
+            <select class="form-select d-inline-block w-auto" id="perPage">
+                <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
+                <option value="20" {{ request('perPage') == 20 ? 'selected' : '' }}>20</option>
+                <option value="30" {{ request('perPage') == 30 ? 'selected' : '' }}>30</option>
+            </select>
+            <span class="ms-1">produk per halaman</span>
         </div>
-    @endif
+    
+        <div>
+            <input type="text" id="search" class="form-control d-inline-block w-auto" placeholder="Cari produk..." value="{{ request('search') }}">
+        </div>
+    </div>
 
-    <hr>
     <h5>Semua Produk</h5>
     <div class="row row-cols-auto g-3"> <!-- g-0 agar tidak ada gap antar col -->
         @foreach($produk as $p)
@@ -37,15 +30,11 @@
                     <img src="{{ asset('storage/' . $p->gambar) }}" alt="{{ $p->nama }}"
                         style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-
-                <!-- Konten Produk -->
                 <div class="card-body px-2 py-2"> <!-- px-1 supaya tidak ada spasi berlebih -->
                     <span class="d-block text-truncate" style="font-size: 0.8rem; font-weight: 500;">
                         {{ $p->nama }}
                     </span>
                     <h6 class="text-success font-weight-bold mb-0">Rp{{ number_format($p->harga, 0, ',', '.') }}</h6>
-
-                    <!-- Rating dan Terjual -->
                     <div class="d-flex align-items-center" style="font-size: 0.7rem; color: #666;">
                         <i class="bi bi-star-fill text-warning me-1"></i> 4.8 | 26 terjual
                     </div>
@@ -73,6 +62,29 @@
         </div>
         @endforeach
     </div>
+    <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center pb-2">
+        <div class="mb-2 text-center text-md-start">
+            @if ($produk->total() > $produk->count()) 
+                <span style="color: #555;">Menampilkan {{ $produk->firstItem() }} - {{ $produk->lastItem() }} dari {{ $produk->total() }} produk</span>
+            @endif
+        </div>
+        <div class="mt-2 mt-md-0">
+            {{ $produk->links('vendor.pagination.bootstrap-5') }}
+        </div>
+    </div>
+    <script>
+        document.getElementById('perPage').addEventListener('change', function () {
+            let search = document.getElementById('search').value;
+            window.location.href = "/transaksi?perPage=" + this.value + "&search=" + search;
+        });
+        
+        document.getElementById('search').addEventListener('keyup', function (event) {
+            if (event.key === "Enter") {
+                let perPage = document.getElementById('perPage').value;
+                window.location.href = "/transaksi?perPage=" + perPage + "&search=" + this.value;
+            }
+        });
+    </script>
 </div>
 @if(session('error'))
     <script>

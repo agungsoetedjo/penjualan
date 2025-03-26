@@ -11,11 +11,21 @@ use Illuminate\Support\Str;
 
 class TransaksiController extends Controller {
 
-    public function index() {
+    public function index(Request $request)
+    {
         $transaksi = Transaksi::with('items.produk')->latest()->get();
-        $produk = Produk::all(); // Ambil semua produk untuk ditampilkan
-        return view('transaksi.index', compact('transaksi', 'produk'));
+
+        $perPage = $request->get('perPage', 10); // Default 6 produk per halaman
+        $search = $request->get('search', ''); // Set default kosong agar tidak null
+
+        $produk = Produk::when($search, function ($query, $search) {
+            return $query->where('nama', 'like', "%$search%");
+        })->paginate($perPage)->onEachSide(2)->withQueryString();
+
+        return view('transaksi.index', compact('transaksi', 'produk', 'perPage', 'search'));
     }
+
+
 
     public function checkout() {
         $keranjang = Keranjang::with('produk')->get(); // Ambil semua data keranjang
