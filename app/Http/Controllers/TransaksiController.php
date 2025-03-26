@@ -23,10 +23,13 @@ class TransaksiController extends Controller {
         })->paginate($perPage)->onEachSide(2)->withQueryString();
 
         if ($request->ajax()) {
-            return view('katalog.partial_produk', compact('produk'))->render();
+            return response()->json([
+                'produk' => view('katalog.partial_produk', compact('produk'))->render(),
+                'pagination' => (string) $produk->links(),
+            ]);
         }
         
-        return view('katalog.katalog_produk', compact('transaksi', 'produk', 'perPage', 'search'));
+        return view('katalog.index', compact('transaksi', 'produk', 'perPage', 'search'));
     }
 
 

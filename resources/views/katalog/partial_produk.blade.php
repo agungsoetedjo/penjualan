@@ -1,5 +1,5 @@
 <div class="container mt-3">
-    <div class="row justify-content-start g-3">
+    <div class="row justify-content-start g-3" id="produk-list">
         @foreach($produk as $p)
         <div class="col-lg-2 col-md-3 col-sm-4 col-6">
             <div class="card shadow-sm border-0 rounded-2 m-0">
@@ -38,5 +38,4 @@
         </div>
         @endforeach
     </div>
-
 </div>
