@@ -57,7 +57,7 @@ input.form-control {
                         <span>Total</span>
                         <h5 class="fw-bold mb-0 text-end">-</h5>
                     </div>
-                    <form action="{{ route('transaksi.checkout') }}" method="POST">
+                    <form action="{{ route('katalog.checkout') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-success w-100 mt-3" disabled>Checkout</button>
                     </form>
@@ -78,7 +78,7 @@ input.form-control {
                         <span>Total</span>
                         <span id="totalHarga" class="fw-bold">Rp{{ number_format($totalHarga, 0, ',', '.') }}</span>
                     </div>
-                    <form action="{{ route('transaksi.checkout') }}" method="POST">
+                    <form action="{{ route('katalog.checkout') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-success w-100 mt-3" @if($keranjangItems->isEmpty()) disabled @endif>Checkout</button>
                     </form>

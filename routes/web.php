@@ -29,8 +29,8 @@ Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])->n
 Route::post('/keranjang/kurangi/{id}', [KeranjangController::class, 'kurangi'])->name('keranjang.kurangi');
 Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');
 
-Route::get('/checkout', [TransaksiController::class, 'checkout'])->name('transaksi.checkout');
+Route::get('/checkout', [TransaksiController::class, 'checkout'])->name('katalog.checkout');
 Route::post('/checkout', [TransaksiController::class, 'prosesCheckout']);
-Route::get('/transaksi/{transaksi}', [TransaksiController::class, 'show'])->name('transaksi.show');
+Route::get('/katalog/{transaksi}', [TransaksiController::class, 'show'])->name('katalog.show');
 Route::get('/katalog', [TransaksiController::class, 'index']);
 

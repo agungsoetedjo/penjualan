@@ -23,10 +23,10 @@ class TransaksiController extends Controller {
         })->paginate($perPage)->onEachSide(2)->withQueryString();
 
         if ($request->ajax()) {
-            return view('transaksi.partial_produk', compact('produk'))->render();
+            return view('katalog.partial_produk', compact('produk'))->render();
         }
         
-        return view('transaksi.katalog_produk', compact('transaksi', 'produk', 'perPage', 'search'));
+        return view('katalog.katalog_produk', compact('transaksi', 'produk', 'perPage', 'search'));
     }
 
 
@@ -60,12 +60,12 @@ class TransaksiController extends Controller {
     
         Keranjang::truncate();
     
-        return redirect()->route('transaksi.show', $transaksi->id)->with('success', 'Checkout berhasil!');
+        return redirect()->route('katalog.show', $transaksi->id)->with('success', 'Checkout berhasil!');
     }
     
 
     public function show(Transaksi $transaksi) {
-        return view('transaksi.show', compact('transaksi'));
+        return view('katalog.show', compact('transaksi'));
     }
 
     public function prosesCheckout()
