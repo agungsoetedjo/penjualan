@@ -27,38 +27,50 @@
     @endif
 
     <hr>
-
-    <h5>Produk yang Tersedia</h5>
-    <div class="row">
+    <h5>Semua Produk</h5>
+    <div class="row row-cols-auto g-3"> <!-- g-0 agar tidak ada gap antar col -->
         @foreach($produk as $p)
-        <div class="col-md-3 mb-4">
-            <div class="card shadow-sm" style="border: 1px solid #f0f0f0; border-radius: 8px; overflow: hidden;">
-                <div class="img-container" style="width: 100%; height: 200px; overflow: hidden;">
-                    <img src="{{ asset('storage/' . $p->gambar) }}" alt="{{ $p->nama }}" style="width: 100%; height: 100%; object-fit: contain;">
+        <div class="col">
+            <div class="card shadow-sm border-0 rounded-2 m-0" style="width: 200px;"> <!-- m-0 agar tidak ada margin -->
+                <!-- Gambar Produk -->
+                <div class="img-container position-relative" style="width: 100%; height: 150px; overflow: hidden; background: #f8f8f8;">
+                    <img src="{{ asset('storage/' . $p->gambar) }}" alt="{{ $p->nama }}"
+                        style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-                <div class="card-body p-3">
-                    <span class="card-title" style="font-size: 1rem; font-weight: normal; display: block; margin-bottom: 5px;">{{ $p->nama }}</span>
-                    <h6 class="card-text text-success font-weight-bold" style="margin-bottom: 15px;">Rp{{ number_format($p->harga, 0, ',', '.') }}</h6>
+
+                <!-- Konten Produk -->
+                <div class="card-body px-2 py-2"> <!-- px-1 supaya tidak ada spasi berlebih -->
+                    <span class="d-block text-truncate" style="font-size: 0.8rem; font-weight: 500;">
+                        {{ $p->nama }}
+                    </span>
+                    <h6 class="text-success font-weight-bold mb-0">Rp{{ number_format($p->harga, 0, ',', '.') }}</h6>
+
+                    <!-- Rating dan Terjual -->
+                    <div class="d-flex align-items-center" style="font-size: 0.7rem; color: #666;">
+                        <i class="bi bi-star-fill text-warning me-1"></i> 4.8 | 26 terjual
+                    </div>
+
                     @if ($p->stok > 0)
                     <form action="{{ route('keranjang.tambahKeKeranjang', ['id' => $p->id]) }}" method="POST">
                         @csrf
-                        <input type="hidden" name="produk_id" value="{{ $p->id }}">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <input type="number" name="jumlah" class="form-control form-control-sm" value="1" min="1" max="{{ $p->stok }}" required style="width: 60px;">
-                            <button title="Tambah ke Keranjang" type="submit" class="btn btn-success btn-sm px-3" style="background-color: #16a085; border-color: #16a085; color: white; font-weight: bold;">
-                                <i class="bi bi-cart-plus"></i> Tambah
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <input type="number" name="jumlah" class="form-control form-control-sm text-center"
+                                value="1" min="1" max="{{ $p->stok }}" required
+                                style="width: 50px; font-size: 0.7rem;">
+                            <button type="submit" class="btn btn-success btn-sm px-2"
+                                style="font-size: 0.7rem;">
+                                <i class="bi bi-cart-plus"></i> Beli
                             </button>
                         </div>
                     </form>
                     @else
-                    <button class="btn btn-danger btn-sm w-100" disabled style="background-color: #dc3545; border-color: #dc3545; color: white;">
-                        <i class="bi bi-exclamation-circle"></i> Stok Habis
+                    <button class="btn btn-danger btn-sm w-100 mt-1" disabled>
+                        Stok Habis
                     </button>
                     @endif
                 </div>
             </div>
         </div>
-        
         @endforeach
     </div>
 </div>
