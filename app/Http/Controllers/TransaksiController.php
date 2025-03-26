@@ -22,10 +22,13 @@ class TransaksiController extends Controller {
             return $query->where('nama', 'like', "%$search%");
         })->paginate($perPage)->onEachSide(2)->withQueryString();
 
+        $produkNotFound = $produk->isEmpty(); // Menandai jika tidak ada produk
+
         if ($request->ajax()) {
             return response()->json([
                 'produk' => view('katalog.partial_produk', compact('produk'))->render(),
                 'pagination' => (string) $produk->links(),
+                'produkNotFound' => $produkNotFound, // Mengirim flag apakah produk ditemukan atau tidak
             ]);
         }
         

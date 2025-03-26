@@ -20,7 +20,13 @@
             <input type="text" id="search" class="form-control d-inline-block w-auto" placeholder="Cari produk..." value="{{ request('search') }}">
         </div>
     </div>
-
+    <!-- Pesan Produk Tidak Ditemukan -->
+    <div id="produk-not-found" class="alert alert-light text-center" style="display: none; margin-top: 30px;">
+    
+        <img src="{{ asset('assets/img/4d27af6a.svg') }}" alt="Produk Tidak Ditemukan" class="img-fluid mb-3" style="max-width: 80px;">
+        <h4 class="text-muted">Produk tidak ditemukan</h4>
+        <p class="text-muted">Coba kata kunci lain atau periksa pengaturan pencarian Anda.</p>
+    </div>
     <div class="container mt-3">
         <div class="row justify-content-start g-3" id="produk-list">
             @foreach($produk as $p)
@@ -75,6 +81,8 @@
     </div>
 </div>
 
+
+
 <script>
     document.getElementById('perPage').addEventListener('change', function () {
         let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
@@ -94,27 +102,36 @@
     });
 
     function fetchProduk() {
-        let perPage = document.getElementById('perPage').value;
-        let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
-        let url = `/katalog?perPage=${perPage}`;
+    let perPage = document.getElementById('perPage').value;
+    let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
+    let url = `/katalog?perPage=${perPage}`;
 
-        if (search) {
-            url += `&search=${encodeURIComponent(search)}`; // Menambahkan parameter search jika ada
+    if (search) {
+        url += `&search=${encodeURIComponent(search)}`; // Menambahkan parameter search jika ada
+    }
+
+    fetch(url, {
+        headers: { "X-Requested-With": "XMLHttpRequest" } // Deteksi request AJAX
+    })
+    .then(response => response.json())  // Mengubah response menjadi JSON
+    .then(data => {
+        // Update produk dan pagination
+        document.getElementById('produk-list').innerHTML = data.produk; // Mengganti isi produk
+        
+        // Menampilkan pesan jika produk tidak ditemukan
+        if (data.produkNotFound) {
+            document.getElementById('produk-not-found').style.display = 'block';
+        } else {
+            document.getElementById('produk-not-found').style.display = 'none';
         }
 
-        fetch(url, {
-            headers: { "X-Requested-With": "XMLHttpRequest" } // Deteksi request AJAX
-        })
-        .then(response => response.json())  // Mengubah response menjadi JSON
-        .then(data => {
-            // Update produk dan pagination
-            document.getElementById('produk-list').innerHTML = data.produk; // Mengganti isi produk
-            // Update URL tanpa &search= jika input kosong
-            history.replaceState(null, "", url);
-        })
-        .catch(error => {
-            console.error('Error:', error); // Log error jika ada
-        });
-    }
+        // Update URL tanpa &search= jika input kosong
+        history.replaceState(null, "", url);
+    })
+    .catch(error => {
+        console.error('Error:', error); // Log error jika ada
+    });
+}
+
 </script>
 @endsection
