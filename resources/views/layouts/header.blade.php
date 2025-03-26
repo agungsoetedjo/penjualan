@@ -15,6 +15,7 @@
 </head>
 <style>
 html, body {
+    background-color: #ECF3F9;
     height: 100%;
     padding-top: 30px;
     margin: 0;

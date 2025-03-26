@@ -48,11 +48,11 @@
                 <td>{{ $p->stok }}</td>
                 <td>{{ $p->kategori->nama }}</td>
                 <td>
-                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditProduk{{ $p->id }}">Edit</button>
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditProduk{{ $p->id }}"><i class="bi bi-pencil"></i></button>
 
                     <form action="/produk/{{ $p->id }}" method="POST" class="d-inline delete-form">
                         @csrf @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-sm delete-btn">Hapus</button>
+                        <button type="button" class="btn btn-danger btn-sm delete-btn"><i class="bi bi-trash"></i></button>
                     </form>
                 </td>
             </tr>
