@@ -26,7 +26,7 @@ class TransaksiController extends Controller {
             return view('transaksi.partial_produk', compact('produk'))->render();
         }
         
-        return view('transaksi.index', compact('transaksi', 'produk', 'perPage', 'search'));
+        return view('transaksi.katalog_produk', compact('transaksi', 'produk', 'perPage', 'search'));
     }
 
 

@@ -16,7 +16,7 @@
                     <a class="nav-link" href="/keranjang">Keranjang</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/transaksi">Transaksi</a>
+                    <a class="nav-link" href="/katalog">Katalog</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">

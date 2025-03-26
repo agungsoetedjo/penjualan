@@ -32,5 +32,5 @@ Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->n
 Route::get('/checkout', [TransaksiController::class, 'checkout'])->name('transaksi.checkout');
 Route::post('/checkout', [TransaksiController::class, 'prosesCheckout']);
 Route::get('/transaksi/{transaksi}', [TransaksiController::class, 'show'])->name('transaksi.show');
-Route::get('/transaksi', [TransaksiController::class, 'index']);
+Route::get('/katalog', [TransaksiController::class, 'index']);
 

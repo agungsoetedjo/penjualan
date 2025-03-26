@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Transaksi & Produk')
+@section('title', 'Katalog Produk')
 
 @section('content')
 <div class="container mt-4">
@@ -36,7 +36,7 @@
     <script>
         document.getElementById('perPage').addEventListener('change', function () {
             let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
-            let url = "/transaksi?perPage=" + this.value;
+            let url = "/katalog?perPage=" + this.value;
             if (search) {
                 url += "&search=" + encodeURIComponent(search);
             }
@@ -54,7 +54,7 @@
         function fetchProduk() {
             let perPage = document.getElementById('perPage').value;
             let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
-            let url = `/transaksi?perPage=${perPage}`;
+            let url = `/katalog?perPage=${perPage}`;
             
             if (search) {
                 url += `&search=${encodeURIComponent(search)}`; // Tambahkan search jika ada input
