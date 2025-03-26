@@ -3,6 +3,24 @@
 @section('title', 'Katalog Produk')
 
 @section('content')
+@if(session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+        });
+    </script>
+@endif
+@if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Sukses',
+            text: '{{ session('success') }}',
+        });
+    </script>
+@endif
 <div class="container mt-4">
     <h5>Semua Produk</h5>
     <div class="d-flex justify-content-between align-items-center mb-3">
