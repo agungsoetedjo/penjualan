@@ -14,7 +14,7 @@ input.form-control {
     height: 30px;
 }
 </style>
-<div class="container mt-4">
+<div class="container mt-4 aria-hidden="true">
     <h3 class="mb-4">Keranjang</h3>
 
     @if(session('success'))
@@ -72,11 +72,11 @@ input.form-control {
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card p-3 mb-3 shadow" style="border-radius: 8px;">
-                    <h5>Ringkasan belanja</h5>
-                    <div class="d-flex justify-content-between align-items-center">
+                <div class="card shadow-sm p-3">
+                    <h6 class="fw-bold">Ringkasan Belanja</h6>
+                    <div class="d-flex justify-content-between">
                         <span>Total</span>
-                        <h5 class="fw-bold mb-0 text-end" id="totalHarga">Rp{{ number_format($totalHarga, 0, ',', '.') }}</h5>
+                        <span id="totalHarga" class="fw-bold">Rp{{ number_format($totalHarga, 0, ',', '.') }}</span>
                     </div>
                     <form action="{{ route('transaksi.checkout') }}" method="POST">
                         @csrf
