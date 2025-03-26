@@ -24,6 +24,7 @@ Route::put('/kategori/{id}', [KategoriController::class, 'update']);
 Route::post('/keranjang/store', [KeranjangController::class, 'store']);
 Route::get('/checkout', [KeranjangController::class, 'checkout']);
 Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
+Route::post('/keranjang/tambahKeranjang/{id}', [KeranjangController::class, 'tambahKeKeranjang'])->name('keranjang.tambahKeKeranjang');
 Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
 Route::post('/keranjang/kurangi/{id}', [KeranjangController::class, 'kurangi'])->name('keranjang.kurangi');
 Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');

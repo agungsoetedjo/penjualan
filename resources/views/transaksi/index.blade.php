@@ -40,9 +40,8 @@
                     <span class="card-title" style="font-size: 1rem; font-weight: normal; display: block; margin-bottom: 5px;">{{ $p->nama }}</span>
                     <h6 class="card-text text-success font-weight-bold" style="margin-bottom: 15px;">Rp{{ number_format($p->harga, 0, ',', '.') }}</h6>
                     @if ($p->stok > 0)
-                    <form action="{{ route('keranjang.tambah', ['id' => $p->id]) }}" method="POST">
+                    <form action="{{ route('keranjang.tambahKeKeranjang', ['id' => $p->id]) }}" method="POST">
                         @csrf
-                        <input type="hidden" name="source" value="transaksi">
                         <input type="hidden" name="produk_id" value="{{ $p->id }}">
                         <div class="d-flex justify-content-between align-items-center">
                             <input type="number" name="jumlah" class="form-control form-control-sm" value="1" min="1" max="{{ $p->stok }}" required style="width: 60px;">

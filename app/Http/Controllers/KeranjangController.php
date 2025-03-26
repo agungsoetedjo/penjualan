@@ -63,11 +63,9 @@ class KeranjangController extends Controller
             $keranjang->decrement('jumlah');
         }
         $keranjangItems = Keranjang::with('produk')->get();
-
         $totalHarga = $keranjangItems->sum(function ($item) {
             return $item->jumlah * $item->produk->harga;
         });
-
         return response()->json([
             'keranjang' => view('keranjang.partial_keranjang', compact('keranjangItems'))->render(),
             'totalHarga' => number_format($totalHarga, 0, ',', '.'),
@@ -78,28 +76,7 @@ class KeranjangController extends Controller
     {
         $jumlah = $request->input('jumlah', 1);
         $produk = Produk::findOrFail($id);
-
-        // Cek jika jumlah yang diminta melebihi stok produk
-        
         $keranjang = Keranjang::where('produk_id', $id)->first();
-
-        // Hitung total jumlah produk di keranjang, jika sudah ada
-        $jumlahDiKeranjang = $keranjang ? $keranjang->jumlah : 0;
-
-        // Cek jika jumlah di keranjang sudah mencapai batas stok
-        if ($jumlahDiKeranjang >= $produk->stok) {
-            // Tampilkan pesan error jika jumlah di keranjang sudah mencapai stok
-            return redirect()->back()->with('error', 'Jumlah produk di keranjang sudah mencapai batas stok yang tersedia.');
-        }
-
-        // Hitung sisa stok yang bisa ditambahkan
-        $sisaStok = $produk->stok - $jumlahDiKeranjang;
-
-        // Cek jika penambahan jumlah akan melebihi stok
-        if (($jumlahDiKeranjang + $jumlah) > $produk->stok) {
-            // Tampilkan pesan error dengan jumlah maksimal yang bisa ditambahkan
-            return redirect()->back()->with('error', 'Anda hanya bisa menambahkan ' . $sisaStok . ' buah produk ini.');
-        }
 
         if ($keranjang) {
             $keranjang->increment('jumlah',$jumlah);
@@ -109,22 +86,38 @@ class KeranjangController extends Controller
                 'jumlah' => $jumlah,
             ]);
         }
-
         $keranjangItems = Keranjang::with('produk')->get();
-
         $totalHarga = $keranjangItems->sum(function ($item) {
             return $item->jumlah * $item->produk->harga;
         });
-
-        $source = $request->input('source', '');
-
-        if ($source === 'transaksi') {
-            return redirect()->route('keranjang.index')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
-        }
         return response()->json([
             'keranjang' => view('keranjang.partial_keranjang', compact('keranjangItems'))->render(),
             'totalHarga' => number_format($totalHarga, 0, ',', '.'),
         ]);
+    }
+
+    public function tambahKeKeranjang(Request $request, $id)
+    {
+        $jumlah = $request->input('jumlah', 1);
+        $produk = Produk::findOrFail($id);
+        $keranjang = Keranjang::where('produk_id', $id)->first();
+        $jumlahDiKeranjang = $keranjang ? $keranjang->jumlah : 0;
+        if ($jumlahDiKeranjang >= $produk->stok) {
+            return redirect()->back()->with('error', 'Jumlah produk di keranjang sudah mencapai batas stok yang tersedia.');
+        }
+        $sisaStok = $produk->stok - $jumlahDiKeranjang;
+        if (($jumlahDiKeranjang + $jumlah) > $produk->stok) {
+            return redirect()->back()->with('error', 'Anda hanya bisa menambahkan maksimal ' . $sisaStok . ' buah produk ini.');
+        }
+        if ($keranjang) {
+            $keranjang->increment('jumlah',$jumlah);
+        } else {
+            Keranjang::create([
+                'produk_id' => $id,
+                'jumlah' => $jumlah,
+            ]);
+        }
+            return redirect()->route('keranjang.index')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
 
     public function hapus($id)
@@ -134,26 +127,20 @@ class KeranjangController extends Controller
         if (!$item) {
             return redirect()->route('keranjang.index')->with('error', 'Item tidak ditemukan!');
         }
-
         $item->delete();
-
         return redirect()->route('keranjang.index')->with('success', 'Item berhasil dihapus dari keranjang!');
     }
 
     public function kurangiAjax($id)
     {
         $keranjang = Keranjang::where('produk_id', $id)->first();
-
         if ($keranjang && $keranjang->jumlah > 1) {
             $keranjang->decrement('jumlah');
         }
-
-        // Ambil ulang data keranjang dan total harga
         $keranjangItems = Keranjang::with('produk')->get();
         $totalHarga = $keranjangItems->sum(function ($item) {
             return $item->jumlah * $item->produk->harga;
         });
-
         return response()->json([
             'keranjang' => view('keranjang.partial_keranjang', compact('keranjangItems'))->render(),
             'totalHarga' => $totalHarga
@@ -167,16 +154,13 @@ class KeranjangController extends Controller
         if ($keranjang) {
             $keranjang->increment('jumlah');
         }
-
         $keranjangItems = Keranjang::with('produk')->get();
         $totalHarga = $keranjangItems->sum(function ($item) {
             return $item->jumlah * $item->produk->harga;
         });
-
         return response()->json([
             'keranjang' => view('keranjang.partial_keranjang', compact('keranjangItems'))->render(),
             'totalHarga' => $totalHarga
         ]);
     }
-
 }
