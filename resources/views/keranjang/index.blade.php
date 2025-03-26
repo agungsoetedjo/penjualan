@@ -15,7 +15,7 @@ input.form-control {
 }
 </style>
 <div class="container mt-4 aria-hidden="true">
-    <h3 class="mb-4">Keranjang</h3>
+    <h5 class="mb-4">Keranjang</h5>
 
     @if(session('success'))
     <script>

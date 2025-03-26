@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="container mt-4">
+    <h5>Semua Produk</h5>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
             <label class="me-2">Tampilkan</label>
@@ -20,7 +21,7 @@
         </div>
     </div>
 
-    <h5>Semua Produk</h5>
+    
     @include('transaksi.partial_produk')
     <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center pb-2">
         <div class="mb-2 text-center text-md-start">

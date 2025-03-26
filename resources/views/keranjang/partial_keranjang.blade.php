@@ -1,21 +1,17 @@
-@foreach($keranjangItems as $item)
-    <div class="d-flex align-items-center border-bottom pb-3 mb-3">
-        <!-- Gambar Produk -->
+@foreach($keranjangItems as $index => $item)
+    @if ($index > 0)
+        <div class="my-3 border-top"></div> <!-- Divider antar produk -->
+    @endif
+    <div class="d-flex align-items-center">
         <img src="{{ asset('storage/' . $item->produk->gambar) }}" class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;">
-        
-        <!-- Nama Produk -->
         <div class="ms-3 flex-grow-1">
             <h5 class="mb-1" style="font-weight: normal;">{{ $item->produk->nama }}</h5>
         </div>
-
-        <!-- Harga -->
         <div class="ms-auto text-end" style="font-weight: bold;">
             <p class="mb-0">Rp{{ number_format($item->produk->harga, 0, ',', '.') }}</p>
         </div>
     </div>
-
-    <!-- Tombol Hapus & Jumlah -->
-    <div class="d-flex justify-content-end align-items-center mt-2 w-100">
+    <div class="d-flex justify-content-end align-items-center w-100">
         <div class="d-flex align-items-center">
             <form action="{{ route('keranjang.hapus', $item->id) }}" method="POST" class="me-2">
                 @csrf @method('DELETE')
