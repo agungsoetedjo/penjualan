@@ -9,9 +9,9 @@
         <div>
             <label class="me-2">Tampilkan</label>
             <select class="form-select d-inline-block w-auto" id="perPage">
-                <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
-                <option value="20" {{ request('perPage') == 20 ? 'selected' : '' }}>20</option>
-                <option value="30" {{ request('perPage') == 30 ? 'selected' : '' }}>30</option>
+                <option value="12" {{ request('perPage') == 12 ? 'selected' : '' }}>12</option>
+                <option value="24" {{ request('perPage') == 24 ? 'selected' : '' }}>24</option>
+                <option value="48" {{ request('perPage') == 48 ? 'selected' : '' }}>48</option>
             </select>
             <span class="ms-1">produk per halaman</span>
         </div>

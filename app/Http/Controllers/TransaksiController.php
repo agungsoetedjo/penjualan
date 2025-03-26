@@ -15,7 +15,7 @@ class TransaksiController extends Controller {
     {
         $transaksi = Transaksi::with('items.produk')->latest()->get();
 
-        $perPage = $request->get('perPage', 10); // Default 6 produk per halaman
+        $perPage = $request->get('perPage', 12); // Default 6 produk per halaman
         $search = $request->get('search', ''); // Set default kosong agar tidak null
 
         $produk = Produk::when($search, function ($query, $search) {

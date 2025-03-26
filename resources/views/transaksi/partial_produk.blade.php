@@ -39,14 +39,4 @@
         @endforeach
     </div>
 
-    <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center pb-2 mt-3">
-        <div class="mb-2 text-center text-md-start">
-            @if ($produk->total() > $produk->count()) 
-                <span style="color: #555;">Menampilkan {{ $produk->firstItem() }} - {{ $produk->lastItem() }} dari {{ $produk->total() }} produk</span>
-            @endif
-        </div>
-        <div class="mt-2 mt-md-0">
-            {{ $produk->links('vendor.pagination.bootstrap-5') }}
-        </div>
-    </div>
 </div>
