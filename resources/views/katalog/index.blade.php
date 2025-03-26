@@ -90,7 +90,7 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(() => {
             fetchProduk();
-        }, 500); // 500ms delay agar tidak langsung request saat user mengetik
+        }, 50); // 500ms delay agar tidak langsung request saat user mengetik
     });
 
     function fetchProduk() {
