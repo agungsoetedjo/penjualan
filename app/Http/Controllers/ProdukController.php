@@ -23,8 +23,10 @@ class ProdukController extends Controller
             'harga' => 'required|numeric|min:1',
             'stok' => 'required|integer|min:0',
             'kategori_id' => 'required|exists:kategori,id',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg|max:4096'
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:8192'
         ]);
+
+        
     
         $gambarPath = $request->file('gambar')->store('produk', 'public');
 
