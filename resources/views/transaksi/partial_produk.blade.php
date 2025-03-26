@@ -3,8 +3,8 @@
     <div class="col">
         <div class="card shadow-sm border-0 rounded-2 m-0" style="width: 200px;">
             <div class="img-container position-relative" style="width: 100%; height: 150px; overflow: hidden; background: #f8f8f8;">
-                <img src="{{ asset('storage/' . $p->gambar) }}" alt="{{ $p->nama }}"
-                    style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="{{ asset('storage/' . $p->gambar) }}" alt="{{ $p->nama }}"    style="width: 100%; height: 100%; object-fit: contain; background-color: #f8f9fa;">
+
             </div>
             <div class="card-body px-2 py-2">
                 <span class="d-block text-truncate" style="font-size: 0.8rem; font-weight: 500;">

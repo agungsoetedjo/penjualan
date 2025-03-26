@@ -68,16 +68,34 @@
                         <form action="/produk/{{ $p->id }}" method="POST" enctype="multipart/form-data">
                             @csrf @method('PUT')
                             <div class="modal-body">
-                                <input type="text" name="nama" class="form-control mb-2" value="{{ $p->nama }}" required>
-                                <input type="number" name="harga" class="form-control mb-2" value="{{ $p->harga }}" required>
-                                <input type="number" name="stok" class="form-control mb-2" value="{{ $p->stok }}" required>
-                                <select name="kategori_id" class="form-control mb-2">
+                                <!-- Nama Produk -->
+                                <label for="nama{{ $p->id }}" class="form-label">Nama Produk</label>
+                                <input type="text" id="nama{{ $p->id }}" name="nama" class="form-control mb-2" value="{{ $p->nama }}" required>
+            
+                                <!-- Harga Produk -->
+                                <label for="harga{{ $p->id }}" class="form-label">Harga</label>
+                                <input type="number" id="harga{{ $p->id }}" name="harga" class="form-control mb-2" value="{{ $p->harga }}" required>
+            
+                                <!-- Stok Produk -->
+                                <label for="stok{{ $p->id }}" class="form-label">Stok</label>
+                                <input type="number" id="stok{{ $p->id }}" name="stok" class="form-control mb-2" value="{{ $p->stok }}" required>
+            
+                                <!-- Kategori Produk -->
+                                <label for="kategori{{ $p->id }}" class="form-label">Kategori</label>
+                                <select id="kategori{{ $p->id }}" name="kategori_id" class="form-control mb-2">
                                     @foreach($kategori as $k)
                                         <option value="{{ $k->id }}" {{ $p->kategori_id == $k->id ? 'selected' : '' }}>{{ $k->nama }}</option>
                                     @endforeach
                                 </select>
-                                <input type="file" name="gambar" class="form-control mb-2">
-                                <img src="{{ asset('storage/' . $p->gambar) }}" alt="Gambar Produk" width="50">
+            
+                                <!-- Upload Gambar -->
+                                <label for="gambar{{ $p->id }}" class="form-label">Gambar Produk</label>
+                                <input type="file" id="gambar{{ $p->id }}" name="gambar" class="form-control mb-2">
+                                
+                                <!-- Preview Gambar -->
+                                <div class="mt-2">
+                                    <img src="{{ asset('storage/' . $p->gambar) }}" alt="Gambar Produk" class="img-thumbnail" width="100">
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -87,6 +105,7 @@
                     </div>
                 </div>
             </div>
+            
             @endforeach
         </tbody>
     </table>
@@ -144,8 +163,18 @@
 <script>
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function() {
-            Swal.fire({ title: "Hapus?", icon: "warning", showCancelButton: true }).then(result => {
-                if (result.isConfirmed) this.closest('.delete-form').submit();
+            Swal.fire({
+                title: "Yakin ingin menghapus?",
+                text: "Data tidak bisa dikembalikan!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, Hapus!"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    this.closest('.delete-form').submit();
+                }
             });
         });
     });
