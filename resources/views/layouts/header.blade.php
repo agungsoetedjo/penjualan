@@ -16,6 +16,7 @@
 <style>
 html, body {
     height: 100%;
+    padding-top: 30px;
     margin: 0;
     display: flex;
     flex-direction: column;
