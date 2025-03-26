@@ -69,13 +69,16 @@
         </div>
     </div>
 
-    <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center pb-2">
+
+    <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center pt-2 pb-2">
         <div class="mb-2 text-center text-md-start">
-            @if ($produk->total() > $produk->count()) 
-                <span style="color: #555;">Menampilkan {{ $produk->firstItem() }} - {{ $produk->lastItem() }} dari {{ $produk->total() }} produk</span>
+            @if ($produk->total() > 0) 
+            <span style="color: #555;">Menampilkan {{ $produk->firstItem() }} - {{ $produk->lastItem() }} dari {{ $produk->total() }} produk</span>
+            @else
+                <span style="color: #555;">Tidak ada produk tersedia</span>
             @endif
         </div>
-        <div class="mt-2 mt-md-0">
+        <div id="pagination" class="mt-2 mt-md-0">
             {{ $produk->links('vendor.pagination.bootstrap-5') }}
         </div>
     </div>
@@ -98,40 +101,52 @@
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(() => {
             fetchProduk();
-        }, 50); // 500ms delay agar tidak langsung request saat user mengetik
+        }, 1); // 500ms delay agar tidak langsung request saat user mengetik
     });
 
     function fetchProduk() {
-    let perPage = document.getElementById('perPage').value;
-    let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
-    let url = `/katalog?perPage=${perPage}`;
+        let perPage = document.getElementById('perPage').value;
+        let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
+        let url = `/katalog?perPage=${perPage}`;
 
-    if (search) {
-        url += `&search=${encodeURIComponent(search)}`; // Menambahkan parameter search jika ada
-    }
-
-    fetch(url, {
-        headers: { "X-Requested-With": "XMLHttpRequest" } // Deteksi request AJAX
-    })
-    .then(response => response.json())  // Mengubah response menjadi JSON
-    .then(data => {
-        // Update produk dan pagination
-        document.getElementById('produk-list').innerHTML = data.produk; // Mengganti isi produk
-        
-        // Menampilkan pesan jika produk tidak ditemukan
-        if (data.produkNotFound) {
-            document.getElementById('produk-not-found').style.display = 'block';
-        } else {
-            document.getElementById('produk-not-found').style.display = 'none';
+        if (search) {
+            url += `&search=${encodeURIComponent(search)}`; // Menambahkan parameter search jika ada
         }
 
-        // Update URL tanpa &search= jika input kosong
-        history.replaceState(null, "", url);
-    })
-    .catch(error => {
-        console.error('Error:', error); // Log error jika ada
-    });
-}
+        fetch(url, {
+            headers: { "X-Requested-With": "XMLHttpRequest" } // Deteksi request AJAX
+        })
+        .then(response => response.json())  // Mengubah response menjadi JSON
+        .then(data => {
+            // Update produk dan pagination
+            document.getElementById('produk-list').innerHTML = data.produk; // Mengganti isi produk
+            
+            // Menampilkan pesan jika produk tidak ditemukan
+            if (data.produkNotFound) {
+                document.getElementById('produk-not-found').style.display = 'block';
+            } else {
+                document.getElementById('produk-not-found').style.display = 'none';
+            }
+
+            // Update keterangan produk yang ditampilkan
+            if (data.produkPagination.total > 0) {
+                document.querySelector('.text-center.text-md-start').innerHTML = 
+                    `Menampilkan ${data.produkPagination.from} - ${data.produkPagination.to} dari ${data.produkPagination.total} produk`;
+                    document.getElementById('pagination').innerHTML = data.pagination;
+                    document.getElementById('pagination').style.display = 'block';
+            } else {
+                document.querySelector('.text-center.text-md-start').innerHTML = `Tidak ada produk tersedia`;
+                document.getElementById('pagination').style.display = 'none';
+            }
+
+            // Update URL tanpa &search= jika input kosong
+            history.replaceState(null, "", url);
+        })
+        .catch(error => {
+            console.error('Error:', error); // Log error jika ada
+        });
+    }
+
 
 </script>
 @endsection

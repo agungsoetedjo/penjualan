@@ -25,10 +25,16 @@ class TransaksiController extends Controller {
         $produkNotFound = $produk->isEmpty(); // Menandai jika tidak ada produk
 
         if ($request->ajax()) {
+            $pagination = $produk->links('vendor.pagination.bootstrap-5')->render();
             return response()->json([
                 'produk' => view('katalog.partial_produk', compact('produk'))->render(),
-                'pagination' => (string) $produk->links(),
                 'produkNotFound' => $produkNotFound, // Mengirim flag apakah produk ditemukan atau tidak
+                'pagination' => $pagination,
+                'produkPagination' => [
+                'from' => $produk->firstItem(),
+                'to' => $produk->lastItem(),
+                'total' => $produk->total(),
+                ]
             ]);
         }
         
