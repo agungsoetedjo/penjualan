@@ -21,47 +21,7 @@
     </div>
 
     <h5>Semua Produk</h5>
-    <div class="row row-cols-auto g-3"> <!-- g-0 agar tidak ada gap antar col -->
-        @foreach($produk as $p)
-        <div class="col">
-            <div class="card shadow-sm border-0 rounded-2 m-0" style="width: 200px;"> <!-- m-0 agar tidak ada margin -->
-                <!-- Gambar Produk -->
-                <div class="img-container position-relative" style="width: 100%; height: 150px; overflow: hidden; background: #f8f8f8;">
-                    <img src="{{ asset('storage/' . $p->gambar) }}" alt="{{ $p->nama }}"
-                        style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div class="card-body px-2 py-2"> <!-- px-1 supaya tidak ada spasi berlebih -->
-                    <span class="d-block text-truncate" style="font-size: 0.8rem; font-weight: 500;">
-                        {{ $p->nama }}
-                    </span>
-                    <h6 class="text-success font-weight-bold mb-0">Rp{{ number_format($p->harga, 0, ',', '.') }}</h6>
-                    <div class="d-flex align-items-center" style="font-size: 0.7rem; color: #666;">
-                        <i class="bi bi-star-fill text-warning me-1"></i> 4.8 | 26 terjual
-                    </div>
-
-                    @if ($p->stok > 0)
-                    <form action="{{ route('keranjang.tambahKeKeranjang', ['id' => $p->id]) }}" method="POST">
-                        @csrf
-                        <div class="d-flex justify-content-between align-items-center mt-1">
-                            <input type="number" name="jumlah" class="form-control form-control-sm text-center"
-                                value="1" min="1" max="{{ $p->stok }}" required
-                                style="width: 50px; font-size: 0.7rem;">
-                            <button type="submit" class="btn btn-success btn-sm px-2"
-                                style="font-size: 0.7rem;">
-                                <i class="bi bi-cart-plus"></i> Beli
-                            </button>
-                        </div>
-                    </form>
-                    @else
-                    <button class="btn btn-danger btn-sm w-100 mt-1" disabled>
-                        Stok Habis
-                    </button>
-                    @endif
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
+    @include('transaksi.partial_produk')
     <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center pb-2">
         <div class="mb-2 text-center text-md-start">
             @if ($produk->total() > $produk->count()) 
@@ -74,16 +34,49 @@
     </div>
     <script>
         document.getElementById('perPage').addEventListener('change', function () {
-            let search = document.getElementById('search').value;
-            window.location.href = "/transaksi?perPage=" + this.value + "&search=" + search;
-        });
-        
-        document.getElementById('search').addEventListener('keyup', function (event) {
-            if (event.key === "Enter") {
-                let perPage = document.getElementById('perPage').value;
-                window.location.href = "/transaksi?perPage=" + perPage + "&search=" + this.value;
+            let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
+            let url = "/transaksi?perPage=" + this.value;
+            if (search) {
+                url += "&search=" + encodeURIComponent(search);
             }
+            window.location.href = url;
         });
+
+        let searchTimeout;
+        document.getElementById('search').addEventListener('keyup', function () {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                fetchProduk();
+            }, 100); // 500ms delay agar tidak langsung request saat user mengetik
+        });
+
+        function fetchProduk() {
+            let perPage = document.getElementById('perPage').value;
+            let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
+            let url = `/transaksi?perPage=${perPage}`;
+            
+            if (search) {
+                url += `&search=${encodeURIComponent(search)}`; // Tambahkan search jika ada input
+            }
+
+            fetch(url, {
+                headers: { "X-Requested-With": "XMLHttpRequest" } // Deteksi request AJAX
+            })
+            .then(response => response.text())
+            .then(data => {
+                let parser = new DOMParser();
+                let newDoc = parser.parseFromString(data, "text/html");
+                let newContent = newDoc.querySelector('.row.row-cols-auto');
+                let newPagination = newDoc.querySelector('.d-flex.flex-column.flex-md-row');
+
+                document.querySelector('.row.row-cols-auto').innerHTML = newContent.innerHTML;
+                document.querySelector('.d-flex.flex-column.flex-md-row').innerHTML = newPagination.innerHTML;
+
+                // Update URL tanpa &search= jika input kosong
+                history.replaceState(null, "", url);
+            })
+            .catch(error => console.error('Error:', error));
+        }
     </script>
 </div>
 @if(session('error'))
