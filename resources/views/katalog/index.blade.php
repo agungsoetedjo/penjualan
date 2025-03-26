@@ -109,8 +109,6 @@
         .then(data => {
             // Update produk dan pagination
             document.getElementById('produk-list').innerHTML = data.produk; // Mengganti isi produk
-            document.querySelector('.d-flex.flex-column.flex-md-row').innerHTML = data.pagination; // Mengganti pagination
-
             // Update URL tanpa &search= jika input kosong
             history.replaceState(null, "", url);
         })
