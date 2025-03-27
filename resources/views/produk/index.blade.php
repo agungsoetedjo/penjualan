@@ -68,7 +68,6 @@
                     </form>
                 </td>
             </tr>
-
             <!-- Modal Edit Produk -->
             <div class="modal fade" id="modalEditProduk{{ $p->id }}" tabindex="-1">
                 <div class="modal-dialog">
@@ -80,27 +79,38 @@
                         <form action="/produk/{{ $p->id }}" method="POST" enctype="multipart/form-data" class="form-edit">
                             @csrf @method('PUT')
                             <div class="modal-body">
-                                <label class="form-label">Nama Produk</label>
-                                <input type="text" name="nama" class="form-control mb-2" value="{{ $p->nama }}" required maxlength="255">
-                        
-                                <label class="form-label">Harga</label>
-                                <input type="number" name="harga" class="form-control mb-2" value="{{ $p->harga }}" required min="1">
-                        
-                                <label class="form-label">Stok</label>
-                                <input type="number" name="stok" class="form-control mb-2" value="{{ $p->stok }}" required min="0">
-                        
-                                <label class="form-label">Kategori</label>
-                                <select name="kategori_id" class="form-control mb-2" required>
-                                    @foreach($kategori as $k)
-                                        <option value="{{ $k->id }}" {{ $p->kategori_id == $k->id ? 'selected' : '' }}>{{ $k->nama }}</option>
-                                    @endforeach
-                                </select>
-                        
-                                <label class="form-label">Gambar Produk</label>
-                                <input type="file" name="gambar" class="form-control mb-2 gambar-input" data-preview="preview{{ $p->id }}" accept="image/*">
-                                
-                                <div class="mt-2">
-                                    <img id="preview{{ $p->id }}" src="{{ asset($p->gambar) }}" alt="Gambar Produk" class="img-thumbnail" width="100">
+                                <!-- Input Nama Produk -->
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Nama Produk</span>
+                                    <input type="text" name="nama" class="form-control" value="{{ $p->nama }}" required maxlength="255" aria-label="Nama Produk">
+                                </div>
+
+                                <!-- Input Harga -->
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Harga</span>
+                                    <input type="number" name="harga" class="form-control" value="{{ $p->harga }}" required min="1" aria-label="Harga">
+                                </div>
+
+                                <!-- Input Stok -->
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Stok</span>
+                                    <input type="number" name="stok" class="form-control" value="{{ $p->stok }}" required min="0" aria-label="Stok">
+                                </div>
+
+                                <!-- Input Kategori -->
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Kategori</span>
+                                    <select name="kategori_id" class="form-control" required aria-label="Kategori">
+                                        @foreach($kategori as $k)
+                                            <option value="{{ $k->id }}" {{ $p->kategori_id == $k->id ? 'selected' : '' }}>{{ $k->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Input Gambar Produk -->
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Gambar Produk</span>
+                                    <input type="file" name="gambar" class="form-control gambar-input" data-preview="preview{{ $p->id }}" accept="image/*" aria-label="Gambar Produk">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -108,11 +118,10 @@
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </form>
-                        
                     </div>
                 </div>
             </div>
-            
+
             @endforeach
         </tbody>
     </table>
@@ -129,35 +138,50 @@
             <form action="/produk" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <label class="form-label">Nama Produk</label>
-                    <input type="text" name="nama" class="form-control" required maxlength="255">
-            
-                    <label class="form-label">Harga</label>
-                    <input type="number" name="harga" class="form-control" required min="1">
-            
-                    <label class="form-label">Stok</label>
-                    <input type="number" name="stok" class="form-control" required min="0">
-            
-                    <label class="form-label">Kategori</label>
-                    <select name="kategori_id" class="form-control" required>
-                        <option value="" disabled selected>Pilih Kategori</option>
-                        @foreach($kategori as $k)
-                            <option value="{{ $k->id }}">{{ $k->nama }}</option>
-                        @endforeach
-                    </select>
-            
-                    <label class="form-label">Gambar Produk</label>
-                    <input type="file" name="gambar" class="form-control" required accept="image/*">
+                    <!-- Input Nama Produk -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Nama Produk</span>
+                        <input type="text" name="nama" class="form-control" required maxlength="255" aria-label="Nama Produk">
+                    </div>
+
+                    <!-- Input Harga -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Harga</span>
+                        <input type="number" name="harga" class="form-control" required min="1" aria-label="Harga">
+                    </div>
+
+                    <!-- Input Stok -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Stok</span>
+                        <input type="number" name="stok" class="form-control" required min="0" aria-label="Stok">
+                    </div>
+
+                    <!-- Input Kategori -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Kategori</span>
+                        <select name="kategori_id" class="form-control" required aria-label="Kategori">
+                            <option value="" disabled selected>Pilih Kategori</option>
+                            @foreach($kategori as $k)
+                                <option value="{{ $k->id }}">{{ $k->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Input Gambar Produk -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Gambar Produk</span>
+                        <input type="file" name="gambar" class="form-control gambar-input" required accept="image/*" aria-label="Gambar Produk">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
-            
         </div>
     </div>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ asset('assets/js/ourscript.js') }}"></script>
@@ -212,27 +236,35 @@ $(document).ready(function () {
         });
     });
 
+    $(document).ready(function () {
+    // Reset form saat modal ditutup
+    $('.modal').on('hidden.bs.modal', function () {
+        // Reset form input
+        let form = $(this).find('form')[0];
+        if (form) form.reset(); // Reset input form
 
-    // Preview gambar sebelum diupload
-    $('.gambar-input').on('change', function () {
-        let previewId = $(this).data('preview');
-        let reader = new FileReader();
-        reader.onload = function (e) {
-            $('#' + previewId).attr('src', e.target.result);
-        };
-        reader.readAsDataURL(this.files[0]);
+        // Reset input file gambar
+        $(this).find('.gambar-input').each(function () {
+            $(this).val(''); // Reset input file gambar
+        });
     });
 
-    // Reset form setelah modal ditutup
-    $('.modal').on('hidden.bs.modal', function () {
-    let form = $(this).find('form')[0];
-    if (form) form.reset(); // Reset input form
+    // Pastikan modal tambah produk reset setelah ditutup
+    $('#modalTambahProduk').on('hidden.bs.modal', function () {
+        $(this).find('.gambar-input').val(''); // Reset input file gambar
+    });
 
-    $(this).find('.img-thumbnail').each(function () {
-        let originalSrc = $(this).data('original-src'); // Ambil URL asli
-        $(this).attr('src', originalSrc); // Reset ke gambar awal
+    // Pastikan modal edit produk reset setelah ditutup
+    $('.modal').on('hidden.bs.modal', function () {
+        let modalId = $(this).attr('id');
+        if (modalId && modalId.startsWith('modalEditProduk')) {
+            // Reset input file gambar untuk modal edit produk
+            $(this).find('.gambar-input').val(''); // Reset input file gambar
+        }
     });
 });
+
+
 
 </script>
 

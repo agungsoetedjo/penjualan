@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 27 Mar 2025 pada 14.55
+-- Waktu pembuatan: 27 Mar 2025 pada 16.50
 -- Versi server: 8.0.30
 -- Versi PHP: 8.3.11
 
@@ -195,42 +195,42 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id`, `nama`, `harga`, `stok`, `kategori_id`, `gambar`, `created_at`, `updated_at`) VALUES
-(1, 'ABC Susu', 2000.00, 8, 1, 'produk_img/JtHOkZLh35j3fqd4rZPK.jpg', '2025-03-24 01:52:44', '2025-03-27 07:27:55'),
-(2, 'Good Day Cappucino', 2500.00, 20, 1, 'produk_img/fP43jHkkdDYfbCDPH2Pm.jpg', '2025-03-26 14:34:35', '2025-03-27 04:02:13'),
-(3, 'Good Day Moccacino 20g', 2000.00, 10, 1, 'produk_img/XruiDSGQqbEIAy97B3hL.png', '2025-03-27 04:31:06', '2025-03-27 04:31:06'),
-(4, 'Good Day Chococino', 2000.00, 10, 1, 'produk_img/cIT2r7PuF45rM8sAzzJT.png', '2025-03-27 14:49:27', '2025-03-27 14:49:27'),
-(5, 'Indocafe Coffemix', 2000.00, 20, 1, 'produk_img/l4eAbTuSsT1b4I6DPjSP.png', '2025-03-26 14:38:23', '2025-03-27 04:02:23'),
-(6, 'Kapal Api Specialmix', 2000.00, 10, 1, 'produk_img/JEQUnZReYTXBtYM6BvcJ.png', '2025-03-26 10:20:08', '2025-03-27 03:59:14'),
-(7, 'Luwak White Koffie', 2000.00, 0, 1, 'produk_img/9KLsccuerFMl7NpCdBWx.png', '2025-03-27 12:55:25', '2025-03-27 14:12:59'),
-(8, 'Tora Bika Creamy Latte', 2000.00, 5, 1, 'produk_img/bC4ylQwmwopdySrkHRDI.jpg', '2025-03-25 08:10:54', '2025-03-27 03:59:07'),
-(9, 'Dancow Putih', 4500.00, 0, 2, 'produk_img/QZipOaGIThSIYIbqHjhn.png', '2025-03-27 14:11:35', '2025-03-27 14:11:35'),
-(10, 'Dancow Coklat', 4500.00, 0, 2, 'produk_img/DHg8Au8LnXO7djREBtZO.png', '2025-03-27 14:11:49', '2025-03-27 14:11:49'),
-(11, 'Energen Vanilla', 2000.00, 10, 2, 'produk_img/0nwTV9Xkmkt9SWtv7rSs.png', '2025-03-24 01:49:51', '2025-03-27 05:23:38'),
-(12, 'Energen Coklat', 2000.00, 10, 2, 'produk_img/lwcb5b3Z3Qpb2gyOeYDT.png', '2025-03-27 13:03:51', '2025-03-27 13:03:51'),
-(13, 'Energen Champion', 2500.00, 10, 2, 'produk_img/dOWb10ukPoSICT5JYGDi.png', '2025-03-27 13:02:01', '2025-03-27 13:02:01'),
-(14, 'Energen Kacang Hijau', 2000.00, 10, 2, 'produk_img/q12Fm2xgHHJoyLWBpZwT.png', '2025-03-27 13:11:17', '2025-03-27 13:11:17'),
-(15, 'Frisian Flag Cokelat', 2000.00, 20, 2, 'produk_img/mM4pfXT72wg1uP6JZzeY.png', '2025-03-27 12:59:04', '2025-03-27 12:59:04'),
-(16, 'Frisian Flag Putih', 2000.00, 20, 2, 'produk_img/sNzNcMnkcOZzw7G6Y7C3.png', '2025-03-27 12:58:51', '2025-03-27 12:58:51'),
-(17, 'Milo Bubuk 25g', 2000.00, 15, 2, 'produk_img/WqAFycVeSpY2wLMTtdCY.png', '2025-03-27 03:13:35', '2025-03-27 04:02:35'),
-(18, 'Ekonomi Ungu', 2000.00, 20, 3, 'produk_img/NA4ZsW3Xdu8umcawNhbn.jpg', '2025-03-27 13:50:03', '2025-03-27 13:50:03'),
-(19, 'Ekonomi Putih', 1000.00, 10, 3, 'produk_img/FRmUCzUEYIdkN8lTTbHM.jpg', '2025-03-27 14:06:57', '2025-03-27 14:06:57'),
-(20, 'Rinso Cair', 1000.00, 30, 3, 'produk_img/kqIeEOYz8OpEjiIhVcZy.png', '2025-03-26 10:34:29', '2025-03-27 03:59:20'),
-(21, 'So Klin Liquid 20mL', 500.00, 50, 3, 'produk_img/dYQ1gSguTNQQ2CCHpzlm.jpg', '2025-03-26 10:57:00', '2025-03-27 04:00:53'),
-(22, 'So Klin Lantai Lavender Bloom', 500.00, 10, 3, 'produk_img/ZXYyr0ionDxNsKJlJGne.jpg', '2025-03-26 12:03:15', '2025-03-27 04:01:37'),
-(23, 'So Klin Lantai Apple & Peony', 500.00, 10, 3, 'produk_img/sxulBIz0vNlFZJdyBCeK.jpg', '2025-03-26 12:06:16', '2025-03-27 04:01:45'),
-(24, 'Sunlight', 2500.00, 10, 3, 'produk_img/Vi8AMCKwL4h4olgX5TT3.jpg', '2025-03-27 14:06:34', '2025-03-27 14:06:34'),
-(25, 'Lifebuoy Merah', 4500.00, 10, 3, 'produk_img/AIWsAIhwGVPUlHdu0mpj.png', '2025-03-27 13:47:39', '2025-03-27 13:47:39'),
-(26, 'LUX Botanical Ungu', 5000.00, 10, 3, 'produk_img/RcTcUxFk7LnNUgMBpmev.png', '2025-03-27 13:44:24', '2025-03-27 13:44:24'),
-(27, 'LUX Botanical Kuning', 5000.00, 10, 3, 'produk_img/TRkLeFtrOigtJxj7hGvQ.jpg', '2025-03-27 13:46:08', '2025-03-27 13:46:08'),
-(28, 'Nuvo Family Biru', 4000.00, 10, 3, 'produk_img/FIP6tA6aviaWFcF0iD8U.png', '2025-03-27 13:45:23', '2025-03-27 13:45:23'),
-(29, 'Daia Putih', 1000.00, 10, 4, 'produk_img/6RtTAIizIJrDoYFeJymw.jpg', '2025-03-26 11:55:26', '2025-03-27 04:01:29'),
-(30, 'Rinso Bubuk', 1000.00, 10, 4, 'produk_img/q5t9DoEVwhiBym4o40J3.jpg', '2025-03-26 11:54:43', '2025-03-27 04:01:16'),
-(31, 'Biosol Karbol', 500.00, 12, 5, 'produk_img/NU2br5HgmQRctvqT1l5k.jpg', '2025-03-27 14:07:33', '2025-03-27 14:07:33'),
-(32, 'Kispray Violet', 500.00, 10, 5, 'produk_img/0ru3jE8ZwC625A8AgHao.jpg', '2025-03-26 12:08:37', '2025-03-27 04:02:03'),
-(33, 'Softener Pink', 500.00, 20, 5, 'produk_img/61zTN0SQhFquZHIPpPUI.png', '2025-03-27 13:49:06', '2025-03-27 13:49:06'),
-(34, 'Softener Twilight Biru', 500.00, 20, 5, 'produk_img/3dKwLMX2XT3CVrXRr5XM.png', '2025-03-27 13:48:20', '2025-03-27 13:48:20'),
-(35, 'Softener Twilight Ungu', 500.00, 20, 5, 'produk_img/hS9uEnepEwRBqeqvFBxb.png', '2025-03-27 13:48:40', '2025-03-27 13:48:40'),
-(36, 'Sariwangi', 1000.00, 10, 8, 'produk_img/qcEWVe8ynORiTyOgzVes.jpg', '2025-03-27 14:06:02', '2025-03-27 14:06:02');
+(1, 'ABC Susu', 2000.00, 8, 1, 'produk_img/AGVKSdcBSrVTKDuFKoGV.jpg', '2025-03-23 18:52:44', '2025-03-27 16:49:57'),
+(2, 'Good Day Cappucino', 2500.00, 20, 1, 'produk_img/fP43jHkkdDYfbCDPH2Pm.jpg', '2025-03-26 07:34:35', '2025-03-26 21:02:13'),
+(3, 'Good Day Moccacino 20g', 2000.00, 10, 1, 'produk_img/XruiDSGQqbEIAy97B3hL.png', '2025-03-26 21:31:06', '2025-03-26 21:31:06'),
+(4, 'Good Day Chococino', 2000.00, 10, 1, 'produk_img/cIT2r7PuF45rM8sAzzJT.png', '2025-03-27 07:49:27', '2025-03-27 07:49:27'),
+(5, 'Indocafe Coffemix', 2000.00, 20, 1, 'produk_img/l4eAbTuSsT1b4I6DPjSP.png', '2025-03-26 07:38:23', '2025-03-26 21:02:23'),
+(6, 'Kapal Api Specialmix', 2000.00, 10, 1, 'produk_img/JEQUnZReYTXBtYM6BvcJ.png', '2025-03-26 03:20:08', '2025-03-26 20:59:14'),
+(7, 'Luwak White Koffie', 2000.00, 0, 1, 'produk_img/9KLsccuerFMl7NpCdBWx.png', '2025-03-27 05:55:25', '2025-03-27 07:12:59'),
+(8, 'Tora Bika Creamy Latte', 2000.00, 5, 1, 'produk_img/bC4ylQwmwopdySrkHRDI.jpg', '2025-03-25 01:10:54', '2025-03-26 20:59:07'),
+(9, 'Dancow Putih', 4500.00, 0, 2, 'produk_img/QZipOaGIThSIYIbqHjhn.png', '2025-03-27 07:11:35', '2025-03-27 07:11:35'),
+(10, 'Dancow Coklat', 4500.00, 0, 2, 'produk_img/DHg8Au8LnXO7djREBtZO.png', '2025-03-27 07:11:49', '2025-03-27 07:11:49'),
+(11, 'Energen Vanilla', 2000.00, 10, 2, 'produk_img/0nwTV9Xkmkt9SWtv7rSs.png', '2025-03-23 18:49:51', '2025-03-26 22:23:38'),
+(12, 'Energen Coklat', 2000.00, 10, 2, 'produk_img/lwcb5b3Z3Qpb2gyOeYDT.png', '2025-03-27 06:03:51', '2025-03-27 06:03:51'),
+(13, 'Energen Champion', 2500.00, 10, 2, 'produk_img/dOWb10ukPoSICT5JYGDi.png', '2025-03-27 06:02:01', '2025-03-27 06:02:01'),
+(14, 'Energen Kacang Hijau', 2000.00, 10, 2, 'produk_img/q12Fm2xgHHJoyLWBpZwT.png', '2025-03-27 06:11:17', '2025-03-27 06:11:17'),
+(15, 'Frisian Flag Cokelat', 2000.00, 20, 2, 'produk_img/mM4pfXT72wg1uP6JZzeY.png', '2025-03-27 05:59:04', '2025-03-27 05:59:04'),
+(16, 'Frisian Flag Putih', 2000.00, 20, 2, 'produk_img/sNzNcMnkcOZzw7G6Y7C3.png', '2025-03-27 05:58:51', '2025-03-27 05:58:51'),
+(17, 'Milo Bubuk 25g', 2000.00, 15, 2, 'produk_img/WqAFycVeSpY2wLMTtdCY.png', '2025-03-26 20:13:35', '2025-03-26 21:02:35'),
+(18, 'Ekonomi Ungu', 2000.00, 20, 3, 'produk_img/NA4ZsW3Xdu8umcawNhbn.jpg', '2025-03-27 06:50:03', '2025-03-27 06:50:03'),
+(19, 'Ekonomi Putih', 1000.00, 10, 3, 'produk_img/FRmUCzUEYIdkN8lTTbHM.jpg', '2025-03-27 07:06:57', '2025-03-27 07:06:57'),
+(20, 'Rinso Cair', 1000.00, 30, 3, 'produk_img/kqIeEOYz8OpEjiIhVcZy.png', '2025-03-26 03:34:29', '2025-03-26 20:59:20'),
+(21, 'So Klin Liquid 20mL', 500.00, 50, 3, 'produk_img/dYQ1gSguTNQQ2CCHpzlm.jpg', '2025-03-26 03:57:00', '2025-03-26 21:00:53'),
+(22, 'So Klin Lantai Lavender Bloom', 500.00, 10, 3, 'produk_img/ZXYyr0ionDxNsKJlJGne.jpg', '2025-03-26 05:03:15', '2025-03-26 21:01:37'),
+(23, 'So Klin Lantai Apple & Peony', 500.00, 10, 3, 'produk_img/sxulBIz0vNlFZJdyBCeK.jpg', '2025-03-26 05:06:16', '2025-03-26 21:01:45'),
+(24, 'Sunlight', 2500.00, 10, 3, 'produk_img/Vi8AMCKwL4h4olgX5TT3.jpg', '2025-03-27 07:06:34', '2025-03-27 07:06:34'),
+(25, 'Lifebuoy Merah', 4500.00, 10, 3, 'produk_img/AIWsAIhwGVPUlHdu0mpj.png', '2025-03-27 06:47:39', '2025-03-27 06:47:39'),
+(26, 'LUX Botanical Ungu', 5000.00, 10, 3, 'produk_img/RcTcUxFk7LnNUgMBpmev.png', '2025-03-27 06:44:24', '2025-03-27 06:44:24'),
+(27, 'LUX Botanical Kuning', 5000.00, 10, 3, 'produk_img/TRkLeFtrOigtJxj7hGvQ.jpg', '2025-03-27 06:46:08', '2025-03-27 06:46:08'),
+(28, 'Nuvo Family Biru', 4000.00, 10, 3, 'produk_img/FIP6tA6aviaWFcF0iD8U.png', '2025-03-27 06:45:23', '2025-03-27 06:45:23'),
+(29, 'Daia Putih', 1000.00, 10, 4, 'produk_img/6RtTAIizIJrDoYFeJymw.jpg', '2025-03-26 04:55:26', '2025-03-26 21:01:29'),
+(30, 'Rinso Bubuk', 1000.00, 10, 4, 'produk_img/q5t9DoEVwhiBym4o40J3.jpg', '2025-03-26 04:54:43', '2025-03-26 21:01:16'),
+(31, 'Biosol Karbol', 500.00, 12, 5, 'produk_img/NU2br5HgmQRctvqT1l5k.jpg', '2025-03-27 07:07:33', '2025-03-27 07:07:33'),
+(32, 'Kispray Violet', 500.00, 10, 5, 'produk_img/0ru3jE8ZwC625A8AgHao.jpg', '2025-03-26 05:08:37', '2025-03-26 21:02:03'),
+(33, 'Softener Pink', 500.00, 20, 5, 'produk_img/61zTN0SQhFquZHIPpPUI.png', '2025-03-27 06:49:06', '2025-03-27 06:49:06'),
+(34, 'Softener Twilight Biru', 500.00, 20, 5, 'produk_img/3dKwLMX2XT3CVrXRr5XM.png', '2025-03-27 06:48:20', '2025-03-27 06:48:20'),
+(35, 'Softener Twilight Ungu', 500.00, 20, 5, 'produk_img/hS9uEnepEwRBqeqvFBxb.png', '2025-03-27 06:48:40', '2025-03-27 06:48:40'),
+(36, 'Sariwangi', 1000.00, 10, 8, 'produk_img/qcEWVe8ynORiTyOgzVes.jpg', '2025-03-27 07:06:02', '2025-03-27 07:06:02');
 
 -- --------------------------------------------------------
 
@@ -252,7 +252,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('9BA2Mw2H0Fta62HwIHzAhh1V5gGHdQ55mMzPfSYz', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoickc2bnJBcWtGZlhTbzNITTFXNzFVdGNNQmtUNk9Mekl5ZXpVNFJVNCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9wZW5qdWFsYW4udGVzdC9rZXJhbmphbmciO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1743087199);
+('9BA2Mw2H0Fta62HwIHzAhh1V5gGHdQ55mMzPfSYz', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoickc2bnJBcWtGZlhTbzNITTFXNzFVdGNNQmtUNk9Mekl5ZXpVNFJVNCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly9wZW5qdWFsYW4udGVzdC9wcm9kdWsiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1743094198);
 
 -- --------------------------------------------------------
 
@@ -420,7 +420,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `keranjang`
@@ -438,7 +438,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi`
