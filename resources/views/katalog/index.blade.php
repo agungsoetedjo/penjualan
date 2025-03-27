@@ -23,21 +23,22 @@
 @endif
 <div class="container mt-4">
     <h5>Semua Produk</h5>
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <div>
-            <label class="me-2">Tampilkan</label>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-center text-md-start mb-3">
+        <div class="d-flex align-items-center justify-content-center flex-wrap mb-2 mb-md-0">
+            <label class="me-2 mb-0">Tampilkan</label>
             <select class="form-select d-inline-block w-auto" id="perPage">
                 <option value="12" {{ request('perPage') == 12 ? 'selected' : '' }}>12</option>
                 <option value="24" {{ request('perPage') == 24 ? 'selected' : '' }}>24</option>
                 <option value="48" {{ request('perPage') == 48 ? 'selected' : '' }}>48</option>
             </select>
-            <span class="ms-1">produk per halaman</span>
+            <span class="ms-2 mb-0">produk per halaman</span>
         </div>
     
-        <div>
-            <input type="text" id="search" class="form-control d-inline-block w-auto" placeholder="Cari produk..." value="{{ request('search') }}">
+        <div class="w-100 d-flex justify-content-center" style="max-width: 250px;">
+            <input type="text" id="search" class="form-control text-center text-md-start" placeholder="Cari produk..." value="{{ request('search') }}">
         </div>
     </div>
+    
     <!-- Pesan Produk Tidak Ditemukan -->
     <div id="produk-not-found" class="alert alert-light text-center" style="display: none; margin-top: 30px;">
     
@@ -49,7 +50,7 @@
     @include('katalog.partial_produk')
 
     <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-center pt-2 pb-2">
-        <div class="mb-2 text-center text-md-start">
+        <div class="cariproduk mb-2 text-center text-md-start">
             @if ($produk->total() > 0) 
             <span style="color: #555;">Menampilkan {{ $produk->firstItem() }} - {{ $produk->lastItem() }} dari {{ $produk->total() }} produk</span>
             @else
@@ -108,12 +109,12 @@
 
             // Update keterangan produk yang ditampilkan
             if (data.produkPagination.total > 0) {
-                document.querySelector('.text-center.text-md-start').innerHTML = 
+                document.querySelector('.cariproduk').innerHTML = 
                     `Menampilkan ${data.produkPagination.from} - ${data.produkPagination.to} dari ${data.produkPagination.total} produk`;
                     document.getElementById('pagination').innerHTML = data.pagination;
                     document.getElementById('pagination').style.display = 'block';
             } else {
-                document.querySelector('.text-center.text-md-start').innerHTML = `Tidak ada produk tersedia`;
+                document.querySelector('.cariproduk').innerHTML = `Tidak ada produk tersedia`;
                 document.getElementById('pagination').style.display = 'none';
             }
 
