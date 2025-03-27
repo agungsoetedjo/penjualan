@@ -7,6 +7,7 @@ use App\Models\Produk;
 use App\Models\Kategori;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProdukController extends Controller
 {
@@ -32,7 +33,7 @@ class ProdukController extends Controller
         // **Upload gambar ke public/produk_img/**
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('produk_img'), $filename);
             $gambarPath = 'produk_img/' . $filename; // Simpan path di database
         }
@@ -72,7 +73,7 @@ class ProdukController extends Controller
             }
 
             $file = $request->file('gambar');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = Str::random(20) . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('produk_img'), $filename);
             $produk->gambar = 'produk_img/' . $filename; // Simpan path baru
         }
