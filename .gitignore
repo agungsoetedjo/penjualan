@@ -5,7 +5,7 @@
 !public/storage
 !storage/*.key
 /vendor
-!storage/app/public/produk/
+!storage/app/public/produk/*
 !storage/app/public/produk/.gitkeep
 .env
 .env.backup
