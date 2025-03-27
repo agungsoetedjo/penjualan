@@ -5,8 +5,8 @@
 !public/storage
 !storage/*.key
 /vendor
-!storage/app/public/produk/*
-!storage/app/public/produk/.gitkeep
+/public/produk_img/
+!public/produk_img/.gitkeep
 .env
 .env.backup
 .env.production
