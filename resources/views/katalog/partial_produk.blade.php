@@ -30,6 +30,9 @@
                     <div class="d-flex align-items-center" style="font-size: 0.7rem; color: #666;">
                         <i class="bi bi-star-fill text-warning me-1"></i> 4.8 | 26 terjual
                     </div>
+                    <div class="d-flex align-items-center" style="font-size: 0.7rem; color: #666;">
+                        Stok : {{ $stokTersisa }}
+                    </div>
                     @if ($p->stok > 0)
                     <form action="{{ route('keranjang.tambahKeKeranjang', ['id' => $p->id]) }}" method="POST">
                         @csrf
@@ -42,7 +45,7 @@
                             <div class="d-flex flex-column">
                                 <!-- Wrapper untuk Input Jumlah (Selebar Card) -->
                                 <div class="d-flex align-items-center border rounded px-2 py-1 jumlah-wrapper w-100">
-                                    <button type="button" class="btn btn-sm border-0 minus-btn">-</button>
+                                    <button type="button" class="btn btn-sm text-danger border-0 minus-btn">-</button>
                                     <input type="text" name="jumlah" class="jumlah-input form-control text-center border-0"
                                         value="1" min="1" max="{{ $stokTersisa }}" readonly
                                         data-stok="{{ $stokTersisa }}" 
