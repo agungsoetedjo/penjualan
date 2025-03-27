@@ -13,6 +13,21 @@ class DashboardController extends Controller
         $totalProduk = Produk::count();
         $totalKategori = Kategori::count();
 
-        return view('dashboard.index', compact('totalProduk', 'totalKategori'));
+        $kategoriProduk = Kategori::leftJoin('produk', 'kategori.id', '=', 'produk.kategori_id')
+            ->selectRaw('kategori.nama, COUNT(produk.id) as total_produk')
+            ->groupBy('kategori.nama')
+            ->get();
+
+        // Pastikan data tidak kosong
+        if ($kategoriProduk->isEmpty()) {
+            $kategoriLabels = [];
+            $kategoriCounts = [];
+        } else {
+            $kategoriLabels = $kategoriProduk->pluck('nama')->toArray();
+            $kategoriCounts = $kategoriProduk->pluck('total_produk')->toArray();
+        }
+
+        return view('dashboard.index', compact('totalProduk', 'totalKategori', 'kategoriLabels', 'kategoriCounts'));
     }
+
 }
