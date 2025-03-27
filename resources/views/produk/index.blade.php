@@ -59,9 +59,12 @@
                 <td>
                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditProduk{{ $p->id }}"><i class="bi bi-pencil"></i></button>
 
-                    <form action="/produk/{{ $p->id }}" method="POST" class="d-inline delete-form">
-                        @csrf @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-sm delete-btn"><i class="bi bi-trash"></i></button>
+                    <form action="{{ route('produk.destroy', $p->id) }}" method="POST" class="d-inline delete-form">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" data-id="{{ $p->id }}" class="btn btn-danger btn-sm delete-btn">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </form>
                 </td>
             </tr>
@@ -186,9 +189,14 @@ $(document).ready(function () {
             });
         }
     });
-
+});
     // Konfirmasi sebelum hapus produk
-    $('.delete-btn').on('click', function () {
+    $(document).on("click", ".delete-btn", function () {
+        let form = $(this).closest(".delete-form");
+        let produkId = $(this).data("id");
+
+        console.log("Menghapus produk ID:", produkId); // Debugging
+
         Swal.fire({
             title: "Yakin ingin menghapus?",
             text: "Data tidak bisa dikembalikan!",
@@ -197,12 +205,13 @@ $(document).ready(function () {
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
             confirmButtonText: "Ya, Hapus!"
-        }).then(result => {
+        }).then((result) => {
             if (result.isConfirmed) {
-                $(this).closest('.delete-form').submit();
+                form.submit();
             }
         });
     });
+
 
     // Preview gambar sebelum diupload
     $('.gambar-input').on('change', function () {
@@ -223,7 +232,6 @@ $(document).ready(function () {
         let originalSrc = $(this).data('original-src'); // Ambil URL asli
         $(this).attr('src', originalSrc); // Reset ke gambar awal
     });
-});
 });
 
 </script>

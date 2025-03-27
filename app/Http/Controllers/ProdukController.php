@@ -49,9 +49,15 @@ class ProdukController extends Controller
         return redirect()->back()->with('success', 'Produk berhasil ditambahkan!');
     }
 
-    public function destroy(Produk $produk)
+    public function destroy($id)
     {
-        Storage::delete('public/' . $produk->gambar);
+        $produk = Produk::findOrFail($id);
+
+        // Hapus gambar jika ada
+        if ($produk->gambar && file_exists(public_path($produk->gambar))) {
+            unlink(public_path($produk->gambar));
+        }
+
         $produk->delete();
         return redirect()->back()->with('success', 'Produk berhasil dihapus');
     }
