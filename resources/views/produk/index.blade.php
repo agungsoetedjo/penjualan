@@ -47,7 +47,7 @@
                 <td>{{ $key + 1 }}</td>
                 <td>
                     @if($p->gambar)
-                        <img src="{{ asset('storage/' . $p->gambar) }}" alt="Gambar Produk" width="50">
+                        <img src="{{ asset($p->gambar) }}" alt="Gambar Produk" width="50">
                     @else
                         <small class="text-muted">Tidak ada gambar</small>
                     @endif
@@ -97,7 +97,7 @@
                                 <input type="file" name="gambar" class="form-control mb-2 gambar-input" data-preview="preview{{ $p->id }}" accept="image/*">
                                 
                                 <div class="mt-2">
-                                    <img id="preview{{ $p->id }}" src="{{ asset('storage/' . $p->gambar) }}" alt="Gambar Produk" class="img-thumbnail" width="100">
+                                    <img id="preview{{ $p->id }}" src="{{ asset($p->gambar) }}" alt="Gambar Produk" class="img-thumbnail" width="100">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -216,9 +216,14 @@ $(document).ready(function () {
 
     // Reset form setelah modal ditutup
     $('.modal').on('hidden.bs.modal', function () {
-        $(this).find('form')[0].reset();
-        $(this).find('.img-thumbnail').attr('src', '');
+    let form = $(this).find('form')[0];
+    if (form) form.reset(); // Reset input form
+
+    $(this).find('.img-thumbnail').each(function () {
+        let originalSrc = $(this).data('original-src'); // Ambil URL asli
+        $(this).attr('src', originalSrc); // Reset ke gambar awal
     });
+});
 });
 
 </script>

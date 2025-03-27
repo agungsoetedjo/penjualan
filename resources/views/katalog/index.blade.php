@@ -51,7 +51,7 @@
             <div class="col-lg-2 col-md-3 col-sm-4 col-6">
                 <div class="card shadow-sm border-0 rounded-2 m-0">
                     <div class="img-container position-relative" style="width: 100%; height: 150px; overflow: hidden; background: #f8f8f8;">
-                        <img src="{{ asset('storage/' . $p->gambar) }}" alt="{{ $p->nama }}" 
+                        <img src="{{ asset($p->gambar) }}" alt="{{ $p->nama }}" 
                             style="width: 100%; height: 100%; object-fit: contain; background-color: #f8f9fa;">
                     </div>
                     <div class="card-body px-2 py-2">

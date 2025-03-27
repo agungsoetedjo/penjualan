@@ -3,7 +3,7 @@
         <div class="my-3 border-top"></div> <!-- Divider antar produk -->
     @endif
     <div class="d-flex align-items-center">
-        <img src="{{ asset('storage/' . $item->produk->gambar) }}" class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;">
+        <img src="{{ asset($item->produk->gambar) }}" class="img-fluid" style="width: 80px; height: 80px; object-fit: cover;">
         <div class="ms-3 flex-grow-1">
             <h5 class="mb-1" style="font-weight: normal;">{{ $item->produk->nama }}</h5>
         </div>
