@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 25 Mar 2025 pada 03.52
+-- Waktu pembuatan: 27 Mar 2025 pada 04.08
 -- Versi server: 8.0.30
 -- Versi PHP: 8.3.11
 
@@ -115,7 +115,10 @@ CREATE TABLE `kategori` (
 
 INSERT INTO `kategori` (`id`, `nama`, `created_at`, `updated_at`) VALUES
 (1, 'Kopi', '2025-03-24 01:30:41', '2025-03-24 01:30:41'),
-(2, 'Susu', '2025-03-24 01:30:49', '2025-03-24 01:30:49');
+(2, 'Susu', '2025-03-24 01:30:49', '2025-03-24 01:30:49'),
+(3, 'Sabun', '2025-03-26 10:34:10', '2025-03-26 10:34:10'),
+(4, 'Deterjen', '2025-03-26 11:54:24', '2025-03-26 11:54:24'),
+(5, 'Pewangi', '2025-03-26 12:08:09', '2025-03-26 12:08:09');
 
 -- --------------------------------------------------------
 
@@ -136,8 +139,7 @@ CREATE TABLE `keranjang` (
 --
 
 INSERT INTO `keranjang` (`id`, `produk_id`, `jumlah`, `created_at`, `updated_at`) VALUES
-(23, 1, 3, '2025-03-25 03:45:56', '2025-03-25 03:46:33'),
-(24, 2, 1, '2025-03-25 03:46:06', '2025-03-25 03:46:31');
+(127, 1, 1, '2025-03-27 03:42:07', '2025-03-27 03:42:07');
 
 -- --------------------------------------------------------
 
@@ -199,8 +201,21 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id`, `nama`, `harga`, `stok`, `kategori_id`, `gambar`, `created_at`, `updated_at`) VALUES
-(1, 'Energen Vanilla', 2000.00, 20, 2, 'produk/pNxJUPqB2S9vtlKfhsi8q5bgWFozicjIhwbea2HS.png', '2025-03-24 01:49:51', '2025-03-24 01:51:42'),
-(2, 'ABC Susu', 2000.00, 10, 1, 'produk/UH2cGwwp62AxlReoXbYGqkeBuDuMIK90HRmkEjoS.jpg', '2025-03-24 01:52:44', '2025-03-24 09:22:34');
+(1, 'Energen Vanilla', 2500.00, 10, 2, 'produk_img/0nwTV9Xkmkt9SWtv7rSs.png', '2025-03-24 01:49:51', '2025-03-27 03:58:16'),
+(2, 'ABC Susu', 2000.00, 7, 1, 'produk_img/JtHOkZLh35j3fqd4rZPK.jpg', '2025-03-24 01:52:44', '2025-03-27 03:58:58'),
+(3, 'Tora Bika Creamy Latte', 2000.00, 5, 1, 'produk_img/bC4ylQwmwopdySrkHRDI.jpg', '2025-03-25 08:10:54', '2025-03-27 03:59:07'),
+(4, 'Kapal Api Specialmix', 2000.00, 10, 1, 'produk_img/JEQUnZReYTXBtYM6BvcJ.png', '2025-03-26 10:20:08', '2025-03-27 03:59:14'),
+(5, 'Rinso Cair', 1000.00, 30, 3, 'produk_img/kqIeEOYz8OpEjiIhVcZy.png', '2025-03-26 10:34:29', '2025-03-27 03:59:20'),
+(6, 'So Klin Liquid 20mL', 500.00, 50, 3, 'produk_img/dYQ1gSguTNQQ2CCHpzlm.jpg', '2025-03-26 10:57:00', '2025-03-27 04:00:53'),
+(7, 'Rinso Bubuk', 1000.00, 10, 4, 'produk_img/q5t9DoEVwhiBym4o40J3.jpg', '2025-03-26 11:54:43', '2025-03-27 04:01:16'),
+(8, 'Daia Putih', 1000.00, 10, 4, 'produk_img/6RtTAIizIJrDoYFeJymw.jpg', '2025-03-26 11:55:26', '2025-03-27 04:01:29'),
+(9, 'So Klin Lantai Lavender Bloom', 500.00, 10, 3, 'produk_img/ZXYyr0ionDxNsKJlJGne.jpg', '2025-03-26 12:03:15', '2025-03-27 04:01:37'),
+(10, 'So Klin Lantai Apple & Peony', 500.00, 10, 3, 'produk_img/sxulBIz0vNlFZJdyBCeK.jpg', '2025-03-26 12:06:16', '2025-03-27 04:01:45'),
+(11, 'Kispray Violet', 500.00, 10, 5, 'produk_img/0ru3jE8ZwC625A8AgHao.jpg', '2025-03-26 12:08:37', '2025-03-27 04:02:03'),
+(12, 'Good Day Cappucino', 2500.00, 20, 1, 'produk_img/fP43jHkkdDYfbCDPH2Pm.jpg', '2025-03-26 14:34:35', '2025-03-27 04:02:13'),
+(13, 'Indocafe Coffemix', 2000.00, 20, 1, 'produk_img/l4eAbTuSsT1b4I6DPjSP.png', '2025-03-26 14:38:23', '2025-03-27 04:02:23'),
+(14, 'Milo Bubuk 25g', 2000.00, 15, 2, 'produk_img/WqAFycVeSpY2wLMTtdCY.png', '2025-03-27 03:13:35', '2025-03-27 04:02:35'),
+(15, 'Good Day Moccacino 20g', 2000.00, 10, 1, 'produk_img/FLMl5PlhWJbLXlhjp1iz.png', '2025-03-27 03:45:13', '2025-03-27 04:02:43');
 
 -- --------------------------------------------------------
 
@@ -222,8 +237,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('6uDOZHmSir4pMxkdjlsNxaKMpylkctGiMpSVqGUP', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZmxraWlsVFBmdnJub0Q5RFFENE9tYVJMTWVsamZVRzh0R05WemsxUiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9wZW5qdWFsYW4udGVzdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1742872444),
-('J6WXPRDPwfHLqNUSiHWytKMnfb2SNWslSr6waZ8T', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUUZvM2lCQkdJZTlkY2NNY002QlgwV3hSNXZlUVJlVVB5c1RlSFZlTyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9wZW5qdWFsYW4udGVzdC9rZXJhbmphbmciO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1742874394);
+('9BA2Mw2H0Fta62HwIHzAhh1V5gGHdQ55mMzPfSYz', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQzIxUldNamxQQWtYTDJ1TklOZk1VR2N6SkR6TVI5Tkg1N3NhWU1TSyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly9wZW5qdWFsYW4udGVzdC9wcm9kdWsiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1743048196);
 
 -- --------------------------------------------------------
 
@@ -391,13 +405,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -409,7 +423,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi`
