@@ -2,9 +2,11 @@
 /node_modules
 /public/build
 /public/hot
-/public/storage
-/storage/*.key
+!public/storage
+!storage/*.key
 /vendor
+!storage/app/public/produk/
+!storage/app/public/produk/.gitkeep
 .env
 .env.backup
 .env.production
