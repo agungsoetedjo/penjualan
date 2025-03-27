@@ -15,31 +15,35 @@ class TransaksiController extends Controller {
     {
         $transaksi = Transaksi::with('items.produk')->latest()->get();
 
-        $perPage = $request->get('perPage', 12); // Default 6 produk per halaman
-        $search = $request->get('search', ''); // Set default kosong agar tidak null
+        $perPage = $request->get('perPage', 12);
+        $search = $request->get('search', '');
 
+        // Ambil produk dan hitung jumlah yang sudah ada di keranjang
         $produk = Produk::when($search, function ($query, $search) {
             return $query->where('nama', 'like', "%$search%");
-        })->paginate($perPage)->onEachSide(2)->withQueryString();
+        })->with(['keranjang' => function ($query) {
+            $query->selectRaw('produk_id, SUM(jumlah) as total_dalam_keranjang')->groupBy('produk_id');
+        }])->paginate($perPage)->onEachSide(2)->withQueryString();
 
-        $produkNotFound = $produk->isEmpty(); // Menandai jika tidak ada produk
+        $produkNotFound = $produk->isEmpty();
 
         if ($request->ajax()) {
             $pagination = $produk->links('vendor.pagination.bootstrap-5')->render();
             return response()->json([
                 'produk' => view('katalog.partial_produk', compact('produk'))->render(),
-                'produkNotFound' => $produkNotFound, // Mengirim flag apakah produk ditemukan atau tidak
+                'produkNotFound' => $produkNotFound,
                 'pagination' => $pagination,
                 'produkPagination' => [
-                'from' => $produk->firstItem(),
-                'to' => $produk->lastItem(),
-                'total' => $produk->total(),
+                    'from' => $produk->firstItem(),
+                    'to' => $produk->lastItem(),
+                    'total' => $produk->total(),
                 ]
             ]);
         }
-        
+
         return view('katalog.index', compact('transaksi', 'produk', 'perPage', 'search'));
     }
+
 
 
 

@@ -99,26 +99,20 @@ class KeranjangController extends Controller
     public function tambahKeKeranjang(Request $request, $id)
     {
         $jumlah = $request->input('jumlah', 1);
-        $produk = Produk::findOrFail($id);
         $keranjang = Keranjang::where('produk_id', $id)->first();
-        $jumlahDiKeranjang = $keranjang ? $keranjang->jumlah : 0;
-        if ($jumlahDiKeranjang >= $produk->stok) {
-            return redirect()->back()->with('error', 'Jumlah produk di keranjang sudah mencapai batas stok yang tersedia.');
-        }
-        $sisaStok = $produk->stok - $jumlahDiKeranjang;
-        if (($jumlahDiKeranjang + $jumlah) > $produk->stok) {
-            return redirect()->back()->with('error', 'Anda hanya bisa menambahkan maksimal ' . $sisaStok . ' buah produk ini.');
-        }
+
         if ($keranjang) {
-            $keranjang->increment('jumlah',$jumlah);
+            $keranjang->increment('jumlah', $jumlah);
         } else {
             Keranjang::create([
                 'produk_id' => $id,
                 'jumlah' => $jumlah,
             ]);
         }
-            return redirect()->route('keranjang.index')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+
+        return redirect()->route('keranjang.index')->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
+
 
     public function hapus($id)
     {
