@@ -26,7 +26,7 @@
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-center text-md-start mb-3">
         <div class="d-flex align-items-center justify-content-center flex-wrap mb-2 mb-md-0">
             <label class="me-2 mb-0">Tampilkan</label>
-            <select class="form-select d-inline-block w-auto" id="perPage">
+            <select class="form-select d-inline-block w-auto" id="perPage" style="font-size: 0.8rem;">
                 <option value="12" {{ request('perPage') == 12 ? 'selected' : '' }}>12</option>
                 <option value="24" {{ request('perPage') == 24 ? 'selected' : '' }}>24</option>
                 <option value="48" {{ request('perPage') == 48 ? 'selected' : '' }}>48</option>
@@ -35,20 +35,22 @@
         </div>
     
         <div class="w-100 d-flex justify-content-center" style="max-width: 250px;">
-            <input type="text" id="search" class="form-control text-center text-md-start" placeholder="Cari produk..." value="{{ request('search') }}">
+            <input style="font-size: 0.8rem;" type="text" id="search" class="form-control text-center text-md-start" placeholder="Cari produk..." value="{{ request('search') }}">
+        </div>
+        
+        <div class="d-flex align-items-center justify-content-center flex-wrap mt-2 mb-md-0">
+            <label class="me-2 mb-0">Kategori</label>
+            <select class="form-select d-inline-block w-auto" id="filterKategori" style="font-size: 0.8rem;">
+                <option value="">*</option>
+                @foreach($kategori as $kat)
+                    <option value="{{ $kat->id }}" {{ request('kategori') == $kat->id ? 'selected' : '' }}>
+                        {{ $kat->nama }}
+                    </option>
+                @endforeach
+            </select>
         </div>
     </div>
-    <div class="d-flex align-items-center justify-content-center flex-wrap mb-2 mb-md-0">
-        <label class="me-2 mb-0">Kategori</label>
-        <select class="form-select d-inline-block w-auto" id="filterKategori">
-            <option value="">Semua</option>
-            @foreach($kategori as $kat)
-                <option value="{{ $kat->id }}" {{ request('kategori') == $kat->id ? 'selected' : '' }}>
-                    {{ $kat->nama }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+    
     <!-- Pesan Produk Tidak Ditemukan -->
     <div id="produk-not-found" class="alert alert-light text-center" style="display: none; margin-top: 30px;">
     
