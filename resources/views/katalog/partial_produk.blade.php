@@ -76,35 +76,34 @@
     </div>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".jumlah-wrapper").forEach(wrapper => {
-            let minusBtn = wrapper.querySelector(".minus-btn");
-            let plusBtn = wrapper.querySelector(".plus-btn");
+document.addEventListener("DOMContentLoaded", function () {
+    // Delegasikan event listener ke elemen parent (produk-list)
+    document.querySelector("#produk-list").addEventListener("click", function (event) {
+        let target = event.target;
+        
+        // Cek apakah yang diklik adalah tombol plus atau minus
+        if (target.classList.contains("minus-btn") || target.classList.contains("plus-btn")) {
+            let wrapper = target.closest(".jumlah-wrapper");
             let inputJumlah = wrapper.querySelector(".jumlah-input");
             let maxStok = parseInt(inputJumlah.getAttribute("max")) || 1;
-    
-            minusBtn.addEventListener("click", function () {
-                let value = parseInt(inputJumlah.value) || 1;
-                if (value > 1) {
-                    inputJumlah.value = value - 1;
-                }
-            });
-    
-            plusBtn.addEventListener("click", function () {
-                let value = parseInt(inputJumlah.value) || 1;
-                if (value < maxStok) {
-                    inputJumlah.value = value + 1;
-                } else {
-                    Swal.fire({
-                        icon: "warning",
-                        title: "Stok Maksimal!",
-                        text: "Jumlah produk sudah mencapai stok maksimal.",
-                        confirmButtonColor: "#d33",
-                        confirmButtonText: "OK"
-                    });
-                }
-            });
-        });
+            let value = parseInt(inputJumlah.value) || 1;
+
+            if (target.classList.contains("minus-btn") && value > 1) {
+                inputJumlah.value = value - 1;
+            }
+
+            if (target.classList.contains("plus-btn") && value < maxStok) {
+                inputJumlah.value = value + 1;
+            } else if (target.classList.contains("plus-btn") && value >= maxStok) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Stok Maksimal!",
+                    text: "Jumlah produk sudah mencapai stok maksimal.",
+                    confirmButtonColor: "#d33",
+                    confirmButtonText: "OK"
+                });
+            }
+        }
     });
-    </script>
-    
+});
+</script>    

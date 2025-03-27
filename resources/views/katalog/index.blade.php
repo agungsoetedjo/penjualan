@@ -38,7 +38,17 @@
             <input type="text" id="search" class="form-control text-center text-md-start" placeholder="Cari produk..." value="{{ request('search') }}">
         </div>
     </div>
-    
+    <div class="d-flex align-items-center justify-content-center flex-wrap mb-2 mb-md-0">
+        <label class="me-2 mb-0">Kategori</label>
+        <select class="form-select d-inline-block w-auto" id="filterKategori">
+            <option value="">Semua</option>
+            @foreach($kategori as $kat)
+                <option value="{{ $kat->id }}" {{ request('kategori') == $kat->id ? 'selected' : '' }}>
+                    {{ $kat->nama }}
+                </option>
+            @endforeach
+        </select>
+    </div>
     <!-- Pesan Produk Tidak Ditemukan -->
     <div id="produk-not-found" class="alert alert-light text-center" style="display: none; margin-top: 30px;">
     
@@ -63,69 +73,47 @@
     </div>
 </div>
 
-
-
 <script>
     document.getElementById('perPage').addEventListener('change', function () {
-        let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
-        let url = "/katalog?perPage=" + this.value;
-        if (search) {
-            url += "&search=" + encodeURIComponent(search);
-        }
-        window.location.href = url;
+        updateURL();
+    });
+
+    document.getElementById('filterKategori').addEventListener('change', function () {
+        updateURL();
     });
 
     let searchTimeout;
     document.getElementById('search').addEventListener('keyup', function () {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(() => {
-            fetchProduk();
-        }, 1); // 500ms delay agar tidak langsung request saat user mengetik
+            updateURL();
+        }, 1);
     });
 
-    function fetchProduk() {
+    function updateURL(page = 1) {
         let perPage = document.getElementById('perPage').value;
-        let search = document.getElementById('search').value.trim(); // Hilangkan spasi kosong
-        let url = `/katalog?perPage=${perPage}`;
+        let kategori = document.getElementById('filterKategori').value;
+        let search = document.getElementById('search').value.trim();
+        let url = `/katalog?page=${page}&perPage=${perPage}`;
 
-        if (search) {
-            url += `&search=${encodeURIComponent(search)}`; // Menambahkan parameter search jika ada
-        }
+        if (kategori) url += `&kategori=${kategori}`;
+        if (search) url += `&search=${encodeURIComponent(search)}`;
 
-        fetch(url, {
-            headers: { "X-Requested-With": "XMLHttpRequest" } // Deteksi request AJAX
-        })
-        .then(response => response.json())  // Mengubah response menjadi JSON
-        .then(data => {
-            // Update produk dan pagination
-            document.getElementById('produk-list').innerHTML = data.produk; // Mengganti isi produk
-            
-            // Menampilkan pesan jika produk tidak ditemukan
-            if (data.produkNotFound) {
-                document.getElementById('produk-not-found').style.display = 'block';
-            } else {
-                document.getElementById('produk-not-found').style.display = 'none';
-            }
-
-            // Update keterangan produk yang ditampilkan
-            if (data.produkPagination.total > 0) {
-                document.querySelector('.cariproduk').innerHTML = 
-                    `Menampilkan ${data.produkPagination.from} - ${data.produkPagination.to} dari ${data.produkPagination.total} produk`;
-                    document.getElementById('pagination').innerHTML = data.pagination;
-                    document.getElementById('pagination').style.display = 'block';
-            } else {
-                document.querySelector('.cariproduk').innerHTML = `Tidak ada produk tersedia`;
-                document.getElementById('pagination').style.display = 'none';
-            }
-
-            // Update URL tanpa &search= jika input kosong
-            history.replaceState(null, "", url);
-        })
-        .catch(error => {
-            console.error('Error:', error); // Log error jika ada
-        });
+        fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('produk-list').innerHTML = data.produk;
+                document.querySelector('.cariproduk').innerHTML = data.produkPagination.total > 0 
+                    ? `Menampilkan ${data.produkPagination.from} - ${data.produkPagination.to} dari ${data.produkPagination.total} produk`
+                    : `Tidak ada produk tersedia`;
+                
+                document.getElementById('pagination').innerHTML = data.pagination;
+                document.getElementById('produk-not-found').style.display = data.produkNotFound ? 'block' : 'none';
+                
+                history.replaceState(null, "", url);
+            })
+            .catch(error => console.error('Error:', error));
     }
-
-
 </script>
+
 @endsection
