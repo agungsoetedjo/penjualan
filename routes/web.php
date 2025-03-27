@@ -1,14 +1,17 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('layouts.app');
-});
+// Route::get('/', function () {
+//     return view('layouts.app');
+// });
+
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/kategori', [KategoriController::class, 'index']);
 Route::post('/kategori/store', [KategoriController::class, 'store']);
