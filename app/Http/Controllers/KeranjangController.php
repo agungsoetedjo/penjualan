@@ -55,44 +55,84 @@ class KeranjangController extends Controller
         }
     }
 
-    public function kurangi($id)
-    {
-        $keranjang = Keranjang::where('produk_id', $id)->first();
+    // public function kurangi($id)
+    // {
+    //     $keranjang = Keranjang::where('produk_id', $id)->first();
 
-        if ($keranjang && $keranjang->jumlah > 1) {
-            $keranjang->decrement('jumlah');
+    //     if ($keranjang && $keranjang->jumlah > 1) {
+    //         $keranjang->decrement('jumlah');
+    //     }
+    //     $keranjangItems = Keranjang::with('produk')->get();
+    //     $totalHarga = $keranjangItems->sum(function ($item) {
+    //         return $item->jumlah * $item->produk->harga;
+    //     });
+    //     return response()->json([
+    //         'keranjang' => view('keranjang.partial_keranjang', compact('keranjangItems'))->render(),
+    //         'totalHarga' => number_format($totalHarga, 0, ',', '.'),
+    //     ]);
+    // }
+
+    // public function tambah(Request $request, $id)
+    // {
+    //     $jumlah = $request->input('jumlah', 1);
+    //     $produk = Produk::findOrFail($id);
+    //     $keranjang = Keranjang::where('produk_id', $id)->first();
+
+    //     if ($keranjang) {
+    //         $keranjang->increment('jumlah',$jumlah);
+    //     } else {
+    //         Keranjang::create([
+    //             'produk_id' => $id,
+    //             'jumlah' => $jumlah,
+    //         ]);
+    //     }
+    //     $keranjangItems = Keranjang::with('produk')->get();
+    //     $totalHarga = $keranjangItems->sum(function ($item) {
+    //         return $item->jumlah * $item->produk->harga;
+    //     });
+    //     return response()->json([
+    //         'keranjang' => view('keranjang.partial_keranjang', compact('keranjangItems'))->render(),
+    //         'totalHarga' => number_format($totalHarga, 0, ',', '.'),
+    //     ]);
+    // }
+
+    public function updateKeranjang(Request $request)
+    {
+        $keranjang = Keranjang::where('produk_id', $request->produk_id)->first();
+
+        if (!$keranjang) {
+            return response()->json(['status' => 'error', 'message' => 'Produk tidak ditemukan di keranjang'], 404);
         }
-        $keranjangItems = Keranjang::with('produk')->get();
-        $totalHarga = $keranjangItems->sum(function ($item) {
-            return $item->jumlah * $item->produk->harga;
-        });
-        return response()->json([
-            'keranjang' => view('keranjang.partial_keranjang', compact('keranjangItems'))->render(),
-            'totalHarga' => number_format($totalHarga, 0, ',', '.'),
-        ]);
-    }
 
-    public function tambah(Request $request, $id)
-    {
-        $jumlah = $request->input('jumlah', 1);
-        $produk = Produk::findOrFail($id);
-        $keranjang = Keranjang::where('produk_id', $id)->first();
+        $produk = Produk::find($request->produk_id);
+        if (!$produk) {
+            return response()->json(['status' => 'error', 'message' => 'Produk tidak ditemukan'], 404);
+        }
 
-        if ($keranjang) {
-            $keranjang->increment('jumlah',$jumlah);
-        } else {
-            Keranjang::create([
-                'produk_id' => $id,
-                'jumlah' => $jumlah,
+        // Cek stok sebelum update
+        if ($request->jumlah > $produk->stok) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Stok tidak mencukupi!'
             ]);
         }
-        $keranjangItems = Keranjang::with('produk')->get();
-        $totalHarga = $keranjangItems->sum(function ($item) {
+
+        // Update jumlah di keranjang
+        $keranjang->update(['jumlah' => $request->jumlah]);
+
+        // Hitung subtotal untuk item ini
+        $subtotal = $keranjang->jumlah * $produk->harga;
+
+        // Hitung total belanja
+        $total = Keranjang::with('produk')->get()->sum(function ($item) {
             return $item->jumlah * $item->produk->harga;
         });
+
         return response()->json([
-            'keranjang' => view('keranjang.partial_keranjang', compact('keranjangItems'))->render(),
-            'totalHarga' => number_format($totalHarga, 0, ',', '.'),
+            'status' => 'success',
+            'jumlah' => $keranjang->jumlah,
+            'subtotal' => number_format($subtotal, 0, ',', '.'),
+            'total' => number_format($total, 0, ',', '.')
         ]);
     }
 

@@ -1,13 +1,18 @@
 <style>
-    .jumlah-wrapper {
-    height: 30px; /* Kurangi tinggi */
+.jumlah-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.jumlah-wrapper button,
-.jumlah-wrapper input {
-    height: 28px; /* Sesuaikan dengan wrapper */
-    font-size: 0.9rem; /* Kurangi ukuran font */
+.jumlah-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
 }
+
 </style>
 @foreach($keranjangItems as $index => $item)
     @if ($index > 0)
@@ -28,12 +33,18 @@
                 @csrf @method('DELETE')
                 <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
             </form>
-            <div class="d-flex align-items-center border rounded px-2 py-1 jumlah-wrapper w-100">
-                <button type="button" class="btn btn-sm text-danger border-0 kurangi" data-id="{{ $item->produk->id }}" {{ $item->jumlah == 1 ? 'disabled' : '' }}>-</button>
-                <input type="text" name="jumlah" class="jumlah-input form-control text-center border-0" 
-                value="{{ $item->jumlah }}" readonly style="flex-grow: 1; font-size: 1rem; outline: none; box-shadow: none;">
-                <button type="button" class="btn btn-sm text-success border-0 tambah" data-id="{{ $item->produk->id }}">+</button>
+            <div class="jumlah-container">
+                <div class="d-flex align-items-center border rounded px-2 py-1 jumlah-wrapper w-100">
+                    <button type="button" class="btn btn-sm text-danger border-0 kurangi" data-id="{{ $item->produk->id }}" {{ $item->jumlah == 1 ? 'disabled' : '' }}>-</button>
+                    <input type="text" name="jumlah" class="jumlah-input form-control text-center border-0 mx-2"
+                           value="{{ $item->jumlah }}" data-stok="{{ $item->produk->stok }}"
+                           style="width: 50px; font-size: 1rem; outline: none; box-shadow: none;">
+                    <button type="button" class="btn btn-sm text-success border-0 tambah" data-id="{{ $item->produk->id }}">+</button>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="stokwarning text-end w-100">
+        <span class="text-danger error-stok" style="font-size: 0.8rem; display: none;"></span>
     </div>
 @endforeach

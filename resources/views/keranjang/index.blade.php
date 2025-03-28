@@ -82,7 +82,6 @@ input.form-control {
                         @csrf
                         <button type="submit" class="btn btn-success w-100 mt-3" @if($keranjangItems->isEmpty()) disabled @endif>Checkout</button>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -91,54 +90,90 @@ input.form-control {
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).on('click', '.kurangi', function() {
-    var productId = $(this).data('id');
+$(document).ready(function() {
+    $('.tambah, .kurangi').on('click', function() {
+        let jumlahContainer = $(this).closest('.d-flex.align-items-center'); 
+        let jumlahInput = jumlahContainer.find('.jumlah-input');
+        let produk_id = $(this).data('id');
+        let stokMaks = parseInt(jumlahInput.data('stok'));
+        let jumlah = parseInt(jumlahInput.val());
+        let errorSpan = $(this).closest('.d-flex.justify-content-end')
+                             .next('.stokwarning')
+                             .find('.error-stok'); // ✅ Fix pencarian error span
 
-    $.ajax({
-        url: '/keranjang/kurangi/' + productId,
-        type: 'POST',
-        data: {
-            _token: '{{ csrf_token() }}',
-        },
-        success: function(response) {
-            // Update keranjang and total price dynamically
-            $('#keranjangItems').html(response.keranjang);  // Update list keranjang
-            $('#totalHarga').text('Rp' + response.totalHarga);  // Update total price
-        },
-        error: function(response) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: response.responseJSON.error,
-            });
+        if ($(this).hasClass('tambah')) {
+            jumlah += 1;
+        } else if ($(this).hasClass('kurangi') && jumlah > 1) {
+            jumlah -= 1;
         }
-    });
-});
 
-$(document).on('click', '.tambah', function() {
-    var productId = $(this).data('id');
-
-    $.ajax({
-        url: '/keranjang/tambah/' + productId,
-        type: 'POST',
-        data: {
-            _token: '{{ csrf_token() }}',
-        },
-        success: function(response) {
-            // Update keranjang and total price dynamically
-            $('#keranjangItems').html(response.keranjang);  // Update list keranjang
-            $('#totalHarga').text('Rp' + response.totalHarga);  // Update total price
-        },
-        error: function(response) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: response.responseJSON.error,
-            });
+        if (jumlah > stokMaks) {
+            errorSpan.show().text(`Maks. beli ${stokMaks}`);
+            jumlah = stokMaks;
+        } else {
+            errorSpan.hide();
         }
+
+        jumlahInput.val(jumlah);
+        updateKeranjang(produk_id, jumlah);
     });
+
+    $('.jumlah-input').on('input', function() {
+        let jumlahContainer = $(this).closest('.d-flex.align-items-center'); 
+        let jumlahInput = $(this);
+        let produk_id = jumlahContainer.find('.tambah').data('id');
+        let stokMaks = parseInt(jumlahInput.data('stok'));
+        let jumlah = parseInt(jumlahInput.val());
+        let errorSpan = $(this).closest('.d-flex.justify-content-end')
+                             .next('.stokwarning')
+                             .find('.error-stok'); // ✅ Fix pencarian error span
+
+        if (isNaN(jumlah) || jumlah < 1) {
+            jumlah = 1;
+        } else if (jumlah > stokMaks) {
+            errorSpan.show().text(`Maks. beli ${stokMaks}`);
+            jumlah = stokMaks;
+        } else {
+            errorSpan.hide();
+        }
+
+        jumlahInput.val(jumlah);
+        updateKeranjang(produk_id, jumlah);
+    });
+
+    function updateKeranjang(produk_id, jumlah) {
+        let jumlahContainer = $('.jumlah-input[data-id="'+ produk_id +'"]').closest('.d-flex.align-items-center');
+        let errorSpan = jumlahContainer.closest('.d-flex.justify-content-end')
+                                       .next('.stokwarning')
+                                       .find('.error-stok'); // ✅ Fix pencarian error span
+
+        if (jumlah > parseInt(jumlahContainer.find('.jumlah-input').data('stok'))) {
+            jumlah = parseInt(jumlahContainer.find('.jumlah-input').data('stok'));
+            jumlahContainer.find('.jumlah-input').val(jumlah);
+            errorSpan.show().text(`Maks. beli ${jumlah}`);
+        } else {
+            errorSpan.hide();
+        }
+
+        $.ajax({
+            url: "{{ route('keranjang.update') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                produk_id: produk_id,
+                jumlah: jumlah
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('.jumlah-input[data-id="'+ produk_id +'"]').val(response.jumlah);
+                    $('.subtotal[data-id="'+ produk_id +'"]').text("Rp" + response.subtotal);
+                    $('#totalHarga').text("Rp" + response.total);
+                }
+            }
+        });
+    }
 });
-
-
 </script>
+
+    
 @endsection
