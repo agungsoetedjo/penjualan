@@ -13,16 +13,7 @@
         });
     </script>
     @endif
-    @if(session('success'))
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil!',
-            text: @json(session('success')),
-        });
-    </script>
-    @endif
-
+ 
     <h3>Daftar Produk</h3>
 
     <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambahProduk">
