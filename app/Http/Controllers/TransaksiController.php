@@ -52,67 +52,26 @@ class TransaksiController extends Controller {
         return view('katalog.index', compact('transaksi', 'produk', 'perPage', 'search', 'kategori'));
     }
 
-    public function checkout() {
-        $keranjang = Keranjang::with('produk')->get(); // Ambil semua data keranjang
-    
-        if ($keranjang->isEmpty()) {
-            return redirect()->back()->with('error', 'Keranjang kosong.');
-        }
-    
-        // Hitung total belanja
-        $total = $keranjang->sum(fn($item) => $item->jumlah * $item->produk->harga);
-    
-        // Simpan transaksi
-        $transaksi = Transaksi::create([
-            'kode_transaksi' => 'TRX-' . strtoupper(Str::random(10)),
-            'total_harga' => $total,
-            'status' => 'pending'
-        ]);
-    
-        // Simpan detail transaksi
-        foreach ($keranjang as $item) {
-            TransaksiDetail::create([
-                'transaksi_id' => $transaksi->id,
-                'produk_id' => $item->produk_id,
-                'jumlah' => $item->jumlah,
-                'subtotal' => $item->jumlah * $item->produk->harga
-            ]);
-        }
-    
-        Keranjang::truncate();
-    
-        return redirect()->route('katalog.show', $transaksi->id)->with('success', 'Checkout berhasil!');
-    }
-    
-
-    public function show(Transaksi $transaksi) {
-        return view('katalog.show', compact('transaksi'));
-    }
-
-    public function prosesCheckout()
+    public function riwayatTransaksi(Request $request)
     {
-        $keranjang = Keranjang::with('produk')->get();
+        $status = $request->query('status');
+        $query = Transaksi::with('details.produk')->orderBy('created_at', 'desc');
 
-        if ($keranjang->isEmpty()) {
-            return redirect('/keranjang')->with('error', 'Keranjang kosong!');
+        if ($status) {
+            $query->where('status', $status);
         }
 
-        $total_harga = $keranjang->sum(fn($item) => $item->produk->harga * $item->jumlah);
+        $transaksi = $query->get();
 
-        $transaksi = Transaksi::create(['total_harga' => $total_harga]);
+        return view('transaksi.riwayat', compact('transaksi', 'status'));
+    }
 
-        foreach ($keranjang as $item) {
-            Transaksi::create([
-                'transaksi_id' => $transaksi->id,
-                'produk_id' => $item->produk_id,
-                'jumlah' => $item->jumlah,
-                'subtotal' => $item->produk->harga * $item->jumlah,
-            ]);
-        }
+    public function updateStatus(Request $request, $id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->update(['status' => $request->status]);
 
-        Keranjang::truncate();
-
-        return redirect('/')->with('success', 'Transaksi berhasil!');
+        return back()->with('success', 'Status transaksi berhasil diperbarui.');
     }
 
 }

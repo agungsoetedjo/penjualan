@@ -7,6 +7,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
+                <!-- Hanya tampil jika admin login -->
+                @auth
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('/') ? 'active' : 'text-white' }}" href="/">Dashboard</a>
                 </li>
@@ -21,30 +23,43 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('keranjang') ? 'active' : 'text-white' }}" href="/keranjang">Keranjang</a>
+                    <a class="nav-link {{ request()->is('transaksi') ? 'active' : 'text-white' }}" href="/transaksi">Transaksi</a>
                 </li>
+                @endauth
+
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('katalog') ? 'active' : 'text-white' }}" href="/katalog">Katalog</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('keranjang') ? 'active' : 'text-white' }}" href="/keranjang">Keranjang</a>
+                </li>
             </ul>
+
             <ul class="navbar-nav ms-auto">
+                @auth
+                <!-- Jika admin login -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {{ request()->is('profile') || request()->is('settings') ? 'active' : 'text-white' }}" 
-                        href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Akun
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ auth()->user()->name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item {{ request()->is('profile') ? 'dropdown-active' : '' }}" href="/profile">Profil</a></li>
-                        <li><a class="dropdown-item {{ request()->is('settings') ? 'dropdown-active' : '' }}" href="/settings">Pengaturan</a></li>
+                        <li><a class="dropdown-item" href="/profile">Profil</a></li>
+                        <li><a class="dropdown-item" href="/settings">Pengaturan</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <form action="/logout" method="POST">
+                            <form action="{{ route('admin.logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="dropdown-item">Logout</button>
                             </form>
                         </li>
                     </ul>
                 </li>
+                @else
+                <!-- Jika belum login -->
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('admin.login') }}">Login</a>
+                </li>
+                @endauth
             </ul>
         </div>
     </div>
