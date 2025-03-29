@@ -170,7 +170,7 @@
                     <!-- Input Gambar Produk -->
                     <div class="input-group mb-3">
                         <span class="input-group-text">Gambar Produk</span>
-                        <input type="file" name="gambar" class="form-control gambar-input" required accept="image/*" aria-label="Gambar Produk">
+                        <input type="file" name="gambar" class="form-control gambar-input" accept="image/*" aria-label="Gambar Produk">
                     </div>
                 </div>
                 <div class="modal-footer">
