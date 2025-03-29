@@ -141,6 +141,13 @@ $(document).ready(function() {
         updateKeranjang(produk_id, jumlah);
     });
 
+    // Menyembunyikan notifikasi saat klik di luar input jumlah
+    $(document).on('click', function(event) {
+        if (!$(event.target).closest('.jumlah-input, .tambah, .kurangi').length) {
+            $('.error-stok').fadeOut(); 
+        }
+    });
+    
     function updateKeranjang(produk_id, jumlah) {
         let jumlahContainer = $('.jumlah-input[data-id="'+ produk_id +'"]').closest('.d-flex.align-items-center');
         let errorSpan = jumlahContainer.closest('.d-flex.justify-content-end')
